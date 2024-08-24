@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
@@ -25,10 +25,11 @@ const DATA: any[] = [
 
   ], // TODO: create component for checkbox
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements AfterViewInit, OnDestroy{
-  @Input() displayedColumns: string[] = [];
+  @Input() displayedColumns: string[] | null = [];
   @Input() dataSource: any[] | null = [];
   @Output() rowClicked: EventEmitter<any> = new EventEmitter<any>();
 

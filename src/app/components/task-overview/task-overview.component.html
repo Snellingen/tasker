@@ -24,8 +24,9 @@
     </mat-form-field>
   </div>
   <br>
-  <app-list
-  [dataSource]="filteredData$ | async"
-  [displayedColumns]="DISPLAY_COLUMNS"
-  (rowClicked)="navigateToEditTask($event)"></app-list>
+
+  <app-list [dataSource]="filteredData$ | async" [displayedColumns]="displayedColumns$ | async"
+    (rowClicked)="navigateToEditTask($event)">
+  </app-list>
+
 </div>
