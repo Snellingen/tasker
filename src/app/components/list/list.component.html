@@ -1,32 +1,27 @@
 @if (dataSource) {
-<table mat-table [dataSource]="dataSource" class='mat-elevation-z8'>
+<table mat-table [dataSource]="dataSource" matSort class='mat-elevation-z8'>
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef> Title </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Title </th>
     <td mat-cell *matCellDef="let element"> {{element.title}} </td>
   </ng-container>
   <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription='"Sort by date'> Date </th>
     <td mat-cell *matCellDef="let element"> {{element.date | dateToString: 'short'}}</td>
   </ng-container>
   <ng-container matColumnDef="priority">
-    <th mat-header-cell *matHeaderCellDef> Priority </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by priority"> Priority </th>
     <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
   </ng-container>
   <ng-container matColumnDef="completed">
-    <th mat-header-cell *matHeaderCellDef> Completed </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by completed"> Completed </th>
     <td mat-cell *matCellDef="let element">
       <mat-checkbox [(ngModel)]="element.completed"></mat-checkbox>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: displayedColumns;"
-    (click)="rowClicked.next(row)"
-    ></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked.next(row)"></tr>
 </table>
 } @else {
-  <p> No data to display </p>
+<p> No data to display </p>
 }
-
