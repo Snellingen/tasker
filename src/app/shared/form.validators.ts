@@ -10,8 +10,8 @@ export function ValidateDateInFuture(control: AbstractControl) {
 }
 
 export function ValidatePriority(control: AbstractControl) {
-  const priority = control.value;
-  if (priority === 'High' || priority === 'Medium' || priority === 'Low') {
+  const priority = control.value?.toLowerCase();
+  if (priority === 'high' || priority === 'medium' || priority === 'low') {
     return null;
   }
   return { invalidPriority: true };

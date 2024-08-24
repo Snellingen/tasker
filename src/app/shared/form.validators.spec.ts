@@ -40,5 +40,11 @@ describe('Form Validators', () => {
       const result = ValidatePriority(control);
       expect(result).toEqual({ invalidPriority: true });
     });
+
+    it('should return null for a valid priority "high" (case insensitive)', () => {
+      const control = new FormControl('high');
+      const result = ValidatePriority(control);
+      expect(result).toBeNull();
+    });
   });
 });

@@ -2,9 +2,30 @@
 <div class="task-overview">
   <button mat-mini-fab [routerLink]="'/edit-task'"><mat-icon>add</mat-icon></button>
   <br>
+  <div class="filters" [formGroup]="filterGroup">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Completion Status</mat-label>
+      <mat-select formControlName="completionStatusFilter">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+        <mat-option value="incomplete">Incomplete</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priorityFilter">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="high">High</mat-option>
+        <mat-option value="medium">Medium</mat-option>
+        <mat-option value="low">Low</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <br>
-  <app-list 
-  [dataSource]="DATA" 
-  [displayedColumns]="DISPLAY_COLUMNS" 
+  <app-list
+  [dataSource]="filteredData$ | async"
+  [displayedColumns]="DISPLAY_COLUMNS"
   (rowClicked)="navigateToEditTask($event)"></app-list>
 </div>

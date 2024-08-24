@@ -1,3 +1,4 @@
+@if (dataSource) {
 <table mat-table [dataSource]="dataSource" class='mat-elevation-z8'>
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -25,3 +26,7 @@
     (click)="rowClicked.next(row)"
     ></tr>
 </table>
+} @else {
+  <p> No data to display </p>
+}
+

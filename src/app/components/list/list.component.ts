@@ -19,7 +19,7 @@ const DATA: any[] = [
 })
 export class ListComponent {
   @Input() displayedColumns: string[] = [];
-  @Input() dataSource: any[] = [];
+  @Input() dataSource: any[] | null = [];
   @Output() rowClicked: EventEmitter<any> = new EventEmitter<any>();
 
 }
