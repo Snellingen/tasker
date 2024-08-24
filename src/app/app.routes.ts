@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { TaskOverviewComponent } from './components/task-overview/task-overview.component';
-import { EditTaskComponent } from './edit-task/edit-task.component';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'task-overview', pathMatch: 'full' },

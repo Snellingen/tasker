@@ -3,5 +3,8 @@
   <button mat-mini-fab [routerLink]="'/edit-task'"><mat-icon>add</mat-icon></button>
   <br>
   <br>
-  <app-list></app-list>
+  <app-list 
+  [dataSource]="DATA" 
+  [displayedColumns]="DISPLAY_COLUMNS" 
+  (rowClicked)="navigateToEditTask($event)"></app-list>
 </div>

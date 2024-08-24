@@ -1,14 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditTaskComponent } from './edit-task.component';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('EditTaskComponent', () => {
   let component: EditTaskComponent;
   let fixture: ComponentFixture<EditTaskComponent>;
 
+  const fakeActivatedRoute: ActivatedRoute = {
+    snapshot: { 
+      data: { id: '1' },
+      paramMap: {
+        get(): string {
+          return '123';
+        },
+      },
+    }
+  } as unknown as ActivatedRoute;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditTaskComponent]
+      imports: [EditTaskComponent, RouterModule.forRoot([])],
+      providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute}]
     })
     .compileComponents();
 

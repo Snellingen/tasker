@@ -1,0 +1,30 @@
+<h2>Hello {{pageTitle}}</h2>
+
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" formControlName="title" required>
+    @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+      <div>{{taskForm.get('title')?.errors | json}}</div>
+    }
+  </div>
+  <div>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" formControlName="date" required>
+    @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
+      <div>{{taskForm.get('date')?.errors | json}}</div>
+    }
+  </div>
+  <div>
+    <label for="priority">Priority:</label>
+    <select id="priority" name="priority" formControlName="priority" required>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
+      <div>{{taskForm.get('priority')?.errors | json}}</div>
+    }
+  </div>
+  <button type="submit">Submit</button>
+</form>

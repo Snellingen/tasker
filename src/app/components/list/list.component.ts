@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,8 @@ const DATA: any[] = [
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = [ 'title', 'date', 'priority', 'completed'];
-  dataSource = DATA;
+  @Input() displayedColumns: string[] = [];
+  @Input() dataSource: any[] = [];
+  @Output() rowClicked: EventEmitter<any> = new EventEmitter<any>();
+
 }
