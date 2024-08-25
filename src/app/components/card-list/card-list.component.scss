@@ -1,7 +1,18 @@
 .card-list{
+  &__viewport::--webkit-scrollbar {
+    display: none;
+  }
+
   &__viewport {
     height: 50vh;
     width: 100%;
+
+
+    /*Other styles.....*/
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+
     .cdk-virtual-scroll-content-wrapper {
       display: flex;
       flex-direction: column;

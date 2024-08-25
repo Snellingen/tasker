@@ -9,6 +9,8 @@
     height: 62px;
     border-radius: 10px 0 0 10px;
     cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
 
     &__content {
         display: flex;

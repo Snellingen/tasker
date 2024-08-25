@@ -56,6 +56,10 @@ export class TaskOverviewComponent {
   });
 
   filter$ = this.filterGroup.valueChanges.pipe(startWith(this.filterGroup.value));
+  disableDrag$ = this.sortGroup.valueChanges.pipe(
+    map(sort => sort.selectedSort !== 'custom')
+  );
+
   tasks$ = this.taskService.tasks$;
   filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
     map(([filterValues, tasks]) => {

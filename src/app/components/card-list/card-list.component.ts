@@ -23,6 +23,7 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 export class CardListComponent {
 
   @Input() dataSource: Task[] | null = [];
+  @Input() disableDrag: boolean | null = false;
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
   @ViewChild('viewport', { static: true }) viewport!: CdkVirtualScrollViewport;
 
@@ -33,23 +34,13 @@ export class CardListComponent {
   lastDragIndex: number = -1;
   idKey = 'task_';
 
-  getDragItemIndex(id: string): number {
-    return Number(id.substring(this.idKey.length));
-  }
-
-  getDragItemId(index: number): string {
-    return this.idKey + index;
-  }
-
   dragStarted(event: any) {
     console.log('Drag started:', event);
-    this.lastDragIndex = this.getDragItemIndex(event.source.element.nativeElement.id);
   }
 
   onItemDrop(event: any) {
     if (this.dataSource === null) return;
     const vsStartIndex = this.viewport.getRenderedRange().start;
-    console.log('Item dropped:', event, vsStartIndex);
     moveItemInArray(this.dataSource, event.previousIndex + vsStartIndex, event.currentIndex + vsStartIndex);
     this.dataSource = [...this.dataSource];
   }

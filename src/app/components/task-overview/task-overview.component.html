@@ -50,6 +50,6 @@
       </mat-form-field>
     </div>
   </section>
-  <app-card-list [dataSource]="sortedData$ | async" ></app-card-list>
+  <app-card-list [dataSource]="sortedData$ | async" [disableDrag]="disableDrag$ | async" ></app-card-list>
 
 </div>
