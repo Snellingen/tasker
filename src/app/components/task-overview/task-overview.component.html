@@ -2,31 +2,39 @@
 <div class="task-overview">
   <button mat-mini-fab [routerLink]="'/edit-task'"><mat-icon>add</mat-icon></button>
   <br>
-  <div class="filters" [formGroup]="filterGroup">
+  <div class="task-overview__filters" [formGroup]="filterGroup">
+    <section>
+      <mat-button-toggle-group
+        formControlName='completionStatusFilters'
+        aria-label="Completion Status"
+        [hideMultipleSelectionIndicator]="true"
+        multiple
+      >
+        <mat-button-toggle value="completed">Completed</mat-button-toggle>
+        <mat-button-toggle value="incomplete">Incomplete</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Completion Status</mat-label>
-      <mat-select formControlName="completionStatusFilter">
-        <mat-option value="all">All</mat-option>
-        <mat-option value="completed">Completed</mat-option>
-        <mat-option value="incomplete">Incomplete</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Priority</mat-label>
-      <mat-select formControlName="priorityFilter">
-        <mat-option value="all">All</mat-option>
-        <mat-option value="high">High</mat-option>
-        <mat-option value="medium">Medium</mat-option>
-        <mat-option value="low">Low</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <section>
+      <mat-button-toggle-group
+        formControlName='priorityFilters'
+        aria-label="Priority Filters"
+        [hideMultipleSelectionIndicator]="true"
+        multiple
+      >
+        <mat-button-toggle value="high">High</mat-button-toggle>
+        <mat-button-toggle value="medium">Medium</mat-button-toggle>
+        <mat-button-toggle value="low">Low</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
   </div>
   <br>
 
-  <app-list [dataSource]="filteredData$ | async" [displayedColumns]="displayedColumns$ | async"
+  <!-- <app-list [dataSource]="filteredData$ | async" [displayedColumns]="displayedColumns$ | async"
     (rowClicked)="navigateToEditTask($event)">
-  </app-list>
+  </app-list> -->
+  <app-card-list [dataSource]="filteredData$ | async" >
+
+  </app-card-list>
 
 </div>

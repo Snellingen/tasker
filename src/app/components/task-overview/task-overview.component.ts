@@ -11,6 +11,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, startWith, } from 'rxjs';
 import { TaskService } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { CardListComponent } from '../card-list/card-list.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-task-overview',
@@ -26,7 +29,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     MatSelect,
     ReactiveFormsModule,
     AsyncPipe,
-    MatProgressSpinner
+    MatProgressSpinner,
+    CardListComponent,
+    MatButtonToggleModule,
+    MatCheckboxModule
+    
   ],
   templateUrl: './task-overview.component.html',
   styleUrl: './task-overview.component.scss',
@@ -39,29 +46,27 @@ export class TaskOverviewComponent {
 
 
   filterGroup = new FormGroup({
-    completionStatusFilter: new FormControl('all'),
-    priorityFilter: new FormControl('all')
+    completionStatusFilters: new FormControl(['incomplete']),
+    priorityFilters: new FormControl(['low', 'medium', 'high'])
   });
 
   filter$ = this.filterGroup.valueChanges.pipe(startWith(this.filterGroup.value));
   tasks$ = this.taskService.tasks$;
   filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
     map(([filterValues, tasks]) => {
-      const { completionStatusFilter, priorityFilter } = filterValues;
-      console.log('Filtering with:', completionStatusFilter, priorityFilter);
+      const { completionStatusFilters, priorityFilters } = filterValues;
+      console.log('Filtering with:', completionStatusFilters, priorityFilters);
       return tasks.filter(item => {
-        if (completionStatusFilter === 'completed') {
-          return item.completed;
-        }
-        if (completionStatusFilter === 'incomplete') {
-          return !item.completed;
-        }
-        return true;
-      }).filter(item => {
-        if (priorityFilter === 'all' || priorityFilter === undefined) {
+        if (!completionStatusFilters || completionStatusFilters.length === 0) {
           return true;
         }
-        return item.priority?.toLowerCase() === priorityFilter?.toLowerCase();
+        return completionStatusFilters.includes(item.completed ? 'completed' : 'incomplete');
+
+      }).filter(item => {
+        if (!priorityFilters || priorityFilters.length === 0) {
+          return true;
+        }
+        return priorityFilters.includes(item.priority?.toLowerCase() ?? '');
       });
     })
   );

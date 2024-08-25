@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { Task } from '../../services/task.service';
@@ -9,11 +9,12 @@ import { MatCheckbox } from '@angular/material/checkbox';
   standalone: true,
   imports: [MatCardModule, MatRippleModule, MatCheckbox],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.scss'
+  styleUrl: './task-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskCardComponent {
 
-  task = {
+  @Input() task: Task | null = {
     id: 1,
     title: 'Task title',
     completed: false,
