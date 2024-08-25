@@ -26,7 +26,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
       Validators.required,
       Validators.minLength(4)
     ]),
-    date: new FormControl(new Date(), ValidateDateInFuture),
+    date: new FormControl<Date>(new Date(), ValidateDateInFuture),
     priority: new FormControl('', ValidatePriority)
   });
 

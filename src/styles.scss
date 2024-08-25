@@ -1,4 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+:root {
+  --primary-color: rgba(255, 107, 107);
+  --secondary-color: rgb(255, 209, 102);
+  --success-color: rgb(6, 214, 160);
+  --danger-color: rgb(239, 71, 111);
+  --warning-color: rgb(255, 209, 102);
+  --info-color: rgb(17, 138, 178);
+  --light-color: rgb(234, 226, 183);
+  --dark-color: rgb(7, 59, 76);
+
+  --priority-low: rgb(17, 138, 178);
+  --priority-medium: rgb(255, 209, 102);
+  --priority-high: rgb(239, 71, 111);
+  --priority-none: rgb(197, 215, 227);
+}
+

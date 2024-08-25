@@ -21,15 +21,15 @@
         position: absolute;
         right: 0;
         top: 0;
-        background-color: gray;
+        background-color: var(--priority-none);
         &--low {
-            background-color: #00ff00;
+            background-color: var(--priority-low);
         }
         &--medium {
-            background-color: #ffcc00;
+            background-color: var(--priority-medium)
         }
         &--high {
-            background-color: #ff0000;
+            background-color: var(--priority-high);
         }
     }
 }

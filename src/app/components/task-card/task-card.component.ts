@@ -18,7 +18,7 @@ export class TaskCardComponent {
     title: 'Task title',
     completed: false,
     date: new Date(),
-    priority: 'Medium',
+    priority: 'Low'
   } as Task
 
   editTask() {
