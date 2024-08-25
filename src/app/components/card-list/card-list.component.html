@@ -1,7 +1,18 @@
 <div class="card-list" #wrapper>
-<cdk-virtual-scroll-viewport #viewport appendOnly [itemSize]="itemPixelSize" [minBufferPx]="minBufferPx" [maxBufferPx]="maxBufferPx" class="card-list__viewport">
-  <div *cdkVirtualFor="let task of dataSource">
-    <app-task-card [task]="task"></app-task-card>
-  </div>
+<cdk-virtual-scroll-viewport
+  #viewport
+  cdkDropList
+  [cdkDropListData]='dataSource'
+  (cdkDropListDropped)='onItemDrop($event)'
+  appendOnly
+  [itemSize]="itemPixelSize"
+  [minBufferPx]="minBufferPx"
+  [maxBufferPx]="maxBufferPx" class="card-list__viewport">
+    <app-task-card
+    cdkDrag
+    [attr.id]="getDragItemId(task.id)" (cdkDragStarted)="dragStarted($event)"
+    *cdkVirtualFor="let task of dataSource"
+    [task]="task">
+    </app-task-card>
 </cdk-virtual-scroll-viewport>
 </div>

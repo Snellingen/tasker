@@ -9,7 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [MatCardModule, MatRippleModule, MatCheckbox, DateToStringPipe, MatIconModule],
+  imports: [
+    MatCardModule,
+    MatRippleModule,
+    MatCheckbox,
+    DateToStringPipe,
+    MatIconModule
+  ],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -51,7 +51,7 @@ export class TaskOverviewComponent {
   });
 
   sortGroup = new FormGroup({
-    selectedSort: new FormControl('dueDate'),
+    selectedSort: new FormControl('custom'),
     selectedSortDirection: new FormControl('asc')
   });
 
