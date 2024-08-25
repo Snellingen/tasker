@@ -29,12 +29,17 @@
     </section>
   </div>
   <br>
-
-  <!-- <app-list [dataSource]="filteredData$ | async" [displayedColumns]="displayedColumns$ | async"
-    (rowClicked)="navigateToEditTask($event)">
-  </app-list> -->
-  <app-card-list [dataSource]="filteredData$ | async" >
-
-  </app-card-list>
+  <section class='task-overview__actions'>
+    <mat-label>tasks: {{ (filteredData$| async)?.length }}/{{(tasks$ | async)?.length}}</mat-label>
+    <mat-form-field class='task-overview__sort'>
+      <mat-label>Sort by: {{selectedSort.value}}</mat-label><mat-select [formControl]='selectedSort' >
+        <mat-option value="custom">Custom</mat-option>
+        <mat-option value="title">Title</mat-option>
+        <mat-option value="priority">Priority</mat-option>
+        <mat-option value="dueDate">Due Date</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <app-card-list [dataSource]="sortedData$ | async" ></app-card-list>
 
 </div>

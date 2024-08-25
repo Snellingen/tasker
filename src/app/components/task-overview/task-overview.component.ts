@@ -8,12 +8,13 @@ import { MatOption } from '@angular/material/core';
 import { AsyncPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, map, startWith, } from 'rxjs';
+import { combineLatest, map, startWith, tap, } from 'rxjs';
 import { TaskService } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { compareCompleted, compareDate, comparePriority, compareString } from '../../shared/compare';
 
 @Component({
   selector: 'app-task-overview',
@@ -32,8 +33,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatProgressSpinner,
     CardListComponent,
     MatButtonToggleModule,
-    MatCheckboxModule
-    
+    MatCheckboxModule,
   ],
   templateUrl: './task-overview.component.html',
   styleUrl: './task-overview.component.scss',
@@ -72,6 +72,30 @@ export class TaskOverviewComponent {
   );
 
   displayedColumns$ = this.taskService.displayedColumns$;
+
+  selectedSort = new FormControl('priority');
+  selectedSortDirection = new FormControl('asc');
+
+  sort$ = this.selectedSort.valueChanges.pipe(
+    startWith(this.selectedSort.value),
+    map(sort => ({ sort, direction: this.selectedSortDirection.value }))
+  );
+
+  sortedData$ = combineLatest([this.filteredData$, this.sort$]).pipe(
+    map(([data, sort]) => {
+      const { sort: sortField, direction } = sort;
+      console.log('Sorting with:', sortField, direction);
+      const isAsc = direction === 'asc';
+      return data.sort((a, b) => {
+        switch (sortField) {
+          case 'title': return compareString(a.title, b.title, isAsc);
+          case 'date': return compareDate(a.date, b.date, isAsc);
+          case 'priority': return comparePriority(a.priority, b.priority, isAsc);
+          case 'completed': return compareCompleted(a.completed, b.completed, isAsc);
+          default: return 0;
+        }
+      });
+    }));
 
   navigateToEditTask(item: any) {
     console.log('Navigating to edit task with id:', item);

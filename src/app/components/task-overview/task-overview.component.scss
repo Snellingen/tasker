@@ -6,4 +6,19 @@
     flex-direction: row;
     gap: 10px;
   }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  &__sort {
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: end;
+    // padding-right: 10px;
+
+  }
 }
