@@ -12,8 +12,7 @@ import { TaskCardComponent } from '../task-card/task-card.component';
 })
 export class CardListComponent {
 
-  @Input() dataSource: Task[] | null = []
-
+  @Input() dataSource: Task[] | null = [];
   ngOnInit() {
   }
 

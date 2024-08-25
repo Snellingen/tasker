@@ -50,6 +50,11 @@ export class TaskOverviewComponent {
     priorityFilters: new FormControl(['low', 'medium', 'high'])
   });
 
+  sortGroup = new FormGroup({
+    selectedSort: new FormControl('dueDate'),
+    selectedSortDirection: new FormControl('asc')
+  });
+
   filter$ = this.filterGroup.valueChanges.pipe(startWith(this.filterGroup.value));
   tasks$ = this.taskService.tasks$;
   filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
@@ -73,21 +78,17 @@ export class TaskOverviewComponent {
 
   displayedColumns$ = this.taskService.displayedColumns$;
 
-  selectedSort = new FormControl('priority');
-  selectedSortDirection = new FormControl('asc');
-
-  sort$ = this.selectedSort.valueChanges.pipe(
-    startWith(this.selectedSort.value),
-    map(sort => ({ sort, direction: this.selectedSortDirection.value }))
-  );
+  sort$ = this.sortGroup.valueChanges.pipe(startWith(this.sortGroup.value));
 
   sortedData$ = combineLatest([this.filteredData$, this.sort$]).pipe(
     map(([data, sort]) => {
-      const { sort: sortField, direction } = sort;
-      console.log('Sorting with:', sortField, direction);
-      const isAsc = direction === 'asc';
-      return data.sort((a, b) => {
-        switch (sortField) {
+      console.log('Sorting with:', sort);
+      const isAsc = sort.selectedSortDirection === 'asc';
+      if (sort.selectedSort === 'custom') {
+        return [...data]; // keeps the order as is from service
+      }
+      return [...data].sort((a, b) => {
+        switch (sort.selectedSort) {
           case 'title': return compareString(a.title, b.title, isAsc);
           case 'date': return compareDate(a.date, b.date, isAsc);
           case 'priority': return comparePriority(a.priority, b.priority, isAsc);
@@ -95,7 +96,8 @@ export class TaskOverviewComponent {
           default: return 0;
         }
       });
-    }));
+    }),
+    );
 
   navigateToEditTask(item: any) {
     console.log('Navigating to edit task with id:', item);
