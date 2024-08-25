@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatRippleModule,
     MatCheckbox,
     DateToStringPipe,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss',
@@ -29,15 +29,6 @@ export class TaskCardComponent {
     date: new Date(),
     priority: 'Low'
   } as Task
-
-  editTask() {
-    console.log('Edit task');
-  }
-
-  deleteTask() {
-    console.log('Delete task');
-  }
-
   onTaskCompletedChange() {
     console.log('Task completed');
   }

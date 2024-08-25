@@ -6,9 +6,14 @@
                 <mat-checkbox class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange()'></mat-checkbox>
                 <mat-card-title>{{ task.title }}</mat-card-title>
             </div>
-            @if (task.date) {
-                <mat-card-title><mat-icon>calendar_month</mat-icon>{{ task.date | dateToString: 'short' }}</mat-card-title>
-            }
+            <div class='task-card__info'>
+                @if (task.date) {
+                    <mat-card-subtitle class='task-card__date'><mat-icon>calendar_month</mat-icon> {{ task.date | dateToString: 'short' }}</mat-card-subtitle>
+                }
+                @if (task.priority) {
+                    <mat-card-subtitle class='task-card__priority'><mat-icon>priority_high</mat-icon>{{ task.priority }}</mat-card-subtitle>
+                }
+            </div>
         </div>
         <div class='task-card__priority-bar task-card__priority-bar--{{task.priority?.toLowerCase()}}'></div>
     </mat-card>

@@ -1,5 +1,6 @@
 .task-card {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: row;
@@ -16,24 +17,59 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: start;
+        justify-content: space-between;
         gap: 10px;
         width: 100%;
-    }
-
-    &__checkbox {
-        margin-right: 10px;
     }
 
     &__title {
         display: flex;
         flex-direction: row;
         align-items: center;
+        max-width: 300px;
+        color: var(--text-color);
+    }
+    &__checkbox {
+        margin-right: 10px;
+    }
+
+    &__info {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.8rem;
+        gap: 10px;
+        color: var(--text-secondary);
+    }
+
+    &__date {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        max-width: 200px;
+    }
+
+    &__priority {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        max-width: 200px;
+    }
+
+    mat-icon {
+        font-size: 1.2rem;
     }
 
     &__priority-bar {
         height: 100%;
         width: 10px;
+
         // should be positioned to the left of the task card
         position: absolute;
         right: 0;
@@ -42,14 +78,20 @@
 
         &--low {
             background-color: var(--priority-low);
+            box-shadow:
+            0 0 100px 30px color-mix(in srgb, var(--priority-low), white 80%);
         }
 
         &--medium {
-            background-color: var(--priority-medium)
+            background-color: var(--priority-medium);
+            box-shadow:
+            0 0 100px 30px color-mix(in srgb, var(--priority-medium), white 80%);
         }
 
         &--high {
             background-color: var(--priority-high);
+            box-shadow:
+            0 0 100px 30px color-mix(in srgb, var(--priority-high), white 80%);
         }
     }
 }
