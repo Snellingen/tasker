@@ -1,6 +1,16 @@
 
-<mat-card matRipple class='task-card'>
-    <mat-checkbox class='task-card__checkbox' [checked]='task?.completed' (change)='onTaskCompletedChange()'></mat-checkbox>
-    <mat-card-title>{{ task?.title }}</mat-card-title>
-    <div class='task-card__priority-bar task-card__priority-bar--{{task?.priority?.toLowerCase()}}'></div>
-</mat-card>
+@if (task){
+    <mat-card matRipple class='task-card'>
+        <div class='task-card__content'>
+            <div class='task-card__title'>
+                <mat-checkbox class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange()'></mat-checkbox>
+                <mat-card-title>{{ task.title }}</mat-card-title>
+            </div>
+            @if (task.date) {
+                <mat-card-title><mat-icon>calendar_month</mat-icon>{{ task.date | dateToString: 'short' }}</mat-card-title>
+            }
+        </div>
+        <div class='task-card__priority-bar task-card__priority-bar--{{task.priority?.toLowerCase()}}'></div>
+    </mat-card>
+}
+
