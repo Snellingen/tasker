@@ -4,12 +4,27 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ValidateDateInFuture, ValidatePriority } from '../../shared/form.validators';
 import { Task, TaskService } from '../../services/task.service';
 import { tap } from 'rxjs';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 
 @Component({
   selector: 'app-edit-task',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule
+  ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,7 +48,6 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   taskSubscription = this.taskService.tasks$.subscribe();
 
   ngOnInit() {
-    console.log('id', this.id);
     if (this.id) {
       this.pageTitle = 'Edit Task ' + this.id;
       this.taskSubscription = this.taskService.getTaskById$(Number(this.id)).pipe(
@@ -48,7 +62,6 @@ export class EditTaskComponent implements OnInit, OnDestroy{
 
   onSubmit() {
     if (this.taskForm.valid) {
-      console.log('Valid form submitted', this.taskForm.value);
       if (this.id) {
         const updatedTask = { ...this.taskForm.value, id: Number(this.id) } as Partial<Task> & { id: number };
         this.taskService.updateTask(Number(this.id), updatedTask);
@@ -57,7 +70,6 @@ export class EditTaskComponent implements OnInit, OnDestroy{
         this.taskService.addTask(newTask);
       }
     } else {
-      console.log('Invalid form submitted', this.taskForm.value);
     }
   }
 

@@ -35,7 +35,6 @@ export class CardListComponent {
   idKey = 'task_';
 
   dragStarted(event: any) {
-    console.log('Drag started:', event);
   }
 
   onItemDrop(event: any) {

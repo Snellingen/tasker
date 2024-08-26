@@ -12,7 +12,6 @@ import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/sl
 export class ThemeSwitchComponent {
 
   onToggleChange(e: MatSlideToggleChange) {
-    console.log('Theme switch toggled:', e);
     if (e.checked) {
       document.documentElement.classList.add('dark-theme');
     } else {

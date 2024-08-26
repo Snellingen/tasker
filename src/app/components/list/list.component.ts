@@ -43,7 +43,6 @@ export class ListComponent implements AfterViewInit, OnDestroy{
   }
 
   handleSortChange(sort: Sort) {
-    console.log('Sort changed', sort);
     this.dataSource = this.dataSource?.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {

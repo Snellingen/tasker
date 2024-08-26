@@ -1,30 +1,30 @@
-<h2>Hello {{pageTitle}}</h2>
-
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" formControlName="title" required>
+<form class="edit-task" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label for="title">Title:</mat-label>
+    <input matInput placeholder="Awesome thing to do" type="text" id="title" name="title" formControlName="title" required>
     @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-      <div>{{taskForm.get('title')?.errors | json}}</div>
+      <mat-error>{{taskForm.get('title')?.errors | json}}</mat-error>
     }
-  </div>
-  <div>
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="date" formControlName="date" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label for="date">Date:</mat-label>
+    <input matInput [matDatepicker]="picker" id="date" name="date" formControlName="date">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
     @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
-      <div>{{taskForm.get('date')?.errors | json}}</div>
+      <mat-error>{{taskForm.get('date')?.errors | json}}</mat-error>
     }
-  </div>
-  <div>
-    <label for="priority">Priority:</label>
-    <select id="priority" name="priority" formControlName="priority" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label for="priority">Priority:</mat-label>
+    <mat-select id="priority" name="priority" formControlName="priority">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>
-    </select>
+    </mat-select>
     @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
-      <div>{{taskForm.get('priority')?.errors | json}}</div>
+      <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>
     }
-  </div>
-  <button type="submit">Submit</button>
+  </mat-form-field>
+  <button mat-raised-button type="submit">Submit</button>
 </form>

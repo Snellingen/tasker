@@ -64,7 +64,6 @@ export class TaskOverviewComponent {
   filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
     map(([filterValues, tasks]) => {
       const { completionStatusFilters, priorityFilters } = filterValues;
-      console.log('Filtering with:', completionStatusFilters, priorityFilters);
       return tasks.filter(item => {
         if (!completionStatusFilters || completionStatusFilters.length === 0) {
           return true;
@@ -86,7 +85,6 @@ export class TaskOverviewComponent {
 
   sortedData$ = combineLatest([this.filteredData$, this.sort$]).pipe(
     map(([data, sort]) => {
-      console.log('Sorting with:', sort);
       const isAsc = sort.selectedSortDirection === 'asc';
       if (sort.selectedSort === 'custom') {
         return [...data]; // keeps the order as is from service
@@ -104,7 +102,6 @@ export class TaskOverviewComponent {
     );
 
   navigateToEditTask(item: any) {
-    console.log('Navigating to edit task with id:', item);
     this.router.navigate(['edit-task', item.id]);
   }
 
