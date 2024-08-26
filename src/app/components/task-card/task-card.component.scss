@@ -79,19 +79,19 @@
         &--low {
             background-color: var(--sys-priority-low);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--sys-priority-low), white 80%);
+            0 0 200px 50px color-mix(in srgb, var(--sys-priority-low), var(--sys-priority-gradient-mix-color));
         }
 
         &--medium {
             background-color: var(--sys-priority-medium);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--sys-priority-medium), white 80%);
+            0 0 200px 50px color-mix(in srgb, var(--sys-priority-medium), var(--sys-priority-gradient-mix-color));
         }
 
         &--high {
             background-color: var(--sys-priority-high);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--sys-priority-high), white 80%);
+            0 0 200px 50px color-mix(in srgb, var(--sys-priority-high), var(--sys-priority-gradient-mix-color));
         }
     }
 }

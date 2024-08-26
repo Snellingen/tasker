@@ -61,6 +61,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--sys-on-background);
   background-color: var(--sys-background);
 }
 
@@ -68,6 +69,7 @@ body {
 :root {
   @include mat.all-component-themes(my-theme.$light-theme);
   @include mat.system-level-typography(my-theme.$light-theme);
+
 
   --sys-background: #eff3f2;
   --sys-error: #ba1a1a;
@@ -123,6 +125,76 @@ body {
   --sys-priority-medium: rgb(255, 209, 102);
   --sys-priority-high: rgb(239, 71, 111);
   --sys-priority-none: rgb(197, 215, 227);
+  --sys-priority-high-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-high), var(--sys-priority-gradient-mix-color) 80%);
+  --sys-priority-medium-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-medium), var(--sys-priority-gradient-mix-color) 80%);
+  --sys-priority-low-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-low), var(--sys-priority-gradient-mix-color) 80%);
+  --sys-priority-gradient-mix-color:  white 70%;
+
+
+  --mat-app-surface: var(--sys-surface);
+
+
+  &.dark-theme {
+    --sys-background: #1e1b16;
+    --sys-error: #ffb4ab;
+    --sys-error-container: #93000a;
+    --sys-inverse-on-surface: #33302b;
+    --sys-inverse-primary: #735c00;
+    --sys-inverse-surface: #e8e1d9;
+    --sys-on-background: #e8e1d9;
+    --sys-on-error: #690005;
+    --sys-on-error-container: #ffdad6;
+    --sys-on-primary: #3c2f00;
+    --sys-on-primary-container: #ffe087;
+    --sys-on-primary-fixed: #231a00;
+    --sys-on-primary-fixed-variant: #574500;
+    --sys-on-secondary: #383018;
+    --sys-on-secondary-container: #f0e1bf;
+    --sys-on-secondary-fixed: #221b06;
+    --sys-on-secondary-fixed-variant: #4f462d;
+    --sys-on-surface: #e8e1d9;
+    --sys-on-surface-variant: #d0c6b1;
+    --sys-on-tertiary: #1c3621;
+    --sys-on-tertiary-container: #cbebcc;
+    --sys-on-tertiary-fixed: #06200e;
+    --sys-on-tertiary-fixed-variant: #324d36;
+    --sys-outline: #98907d;
+    --sys-outline-variant: #4d4636;
+    --sys-primary: #e6c358;
+    --sys-primary-container: #574500;
+    --sys-primary-fixed: #ffe087;
+    --sys-primary-fixed-dim: #e6c358;
+    --sys-scrim: #000000;
+    --sys-secondary: #d3c5a5;
+    --sys-secondary-container: #4f462d;
+    --sys-secondary-fixed: #f0e1bf;
+    --sys-secondary-fixed-dim: #d3c5a5;
+    --sys-shadow: #000000;
+    --sys-surface: #2f2b23;
+    --sys-surface-bright: #3c3933;
+    --sys-surface-container: #221f1a;
+    --sys-surface-container-high: #2d2a25;
+    --sys-surface-container-highest: #37342f;
+    --sys-surface-container-low: #1e1b16;
+    --sys-surface-container-lowest: #0c0b09;
+    --sys-surface-dim: #12100d;
+    --sys-surface-tint: #e6c358;
+    --sys-surface-variant: #4d4636;
+    --sys-tertiary: #b0ceb1;
+    --sys-tertiary-container: #324d36;
+    --sys-tertiary-fixed: #cbebcc;
+    --sys-tertiary-fixed-dim: #b0ceb1;
+
+    --sys-priority-low: rgb(17, 138, 178);
+    --sys-priority-medium: rgb(255, 209, 102);
+    --sys-priority-high: rgb(239, 71, 111);
+    --sys-priority-none: rgb(197, 215, 227);
+    --sys-priority-gradient-mix-color:  black 50%;
+
+    --mat-app-surface: var(--sys-surface);
+
+
+  }
 }
 
 

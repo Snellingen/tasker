@@ -1,4 +1,3 @@
-<h1> Task Overview </h1>
 <div class="task-overview">
   <button mat-mini-fab [routerLink]="'/edit-task'"><mat-icon>add</mat-icon></button>
   <br>
@@ -30,7 +29,7 @@
   </div>
   <br>
   <section class='task-overview__actions' [formGroup]="sortGroup">
-    <mat-label>tasks: {{ (filteredData$| async)?.length }}/{{(tasks$ | async)?.length}}</mat-label>
+    <p>tasks: {{ (filteredData$| async)?.length }}/{{(tasks$ | async)?.length}}<p>
     <div class = 'task-overview__actions__sort'>
       <mat-form-field>
         <mat-label>Sort by:</mat-label>
