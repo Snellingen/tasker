@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditTaskComponent } from './edit-task.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('EditTaskComponent', () => {
   let component: EditTaskComponent;
@@ -21,7 +22,7 @@ describe('EditTaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EditTaskComponent, RouterModule.forRoot([])],
-      providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute}]
+      providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute}, provideAnimations()]
     })
     .compileComponents();
 
