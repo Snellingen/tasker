@@ -46,8 +46,8 @@ export class TaskOverviewComponent {
 
 
   filterGroup = new FormGroup({
-    completionStatusFilters: new FormControl(['incomplete']),
-    priorityFilters: new FormControl(['low', 'medium', 'high'])
+    completionStatusFilters: new FormControl(),
+    priorityFilters: new FormControl()
   });
 
   sortGroup = new FormGroup({

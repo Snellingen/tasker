@@ -43,6 +43,16 @@ describe('Compare Functions', () => {
       const result = comparePriority('Low', 'Medium', false);
       expect(result).toBe(-1);
     });
+
+    it('should return 0 if a is undefined and b is not', () => {
+      const result = comparePriority(undefined, 'Medium', true);
+      expect(result).toBe(0);
+    });
+
+    it('should return -1 when a is None priority is compared to High priority and isAsc is false', () => {
+      const result = comparePriority('None', 'High', false);
+      expect(result).toBe(-1);
+    });
   });
 
   describe('compareCompleted', () => {

@@ -5,14 +5,14 @@ export interface Task {
   id: number;
   title?: string;
   date?: Date;
-  priority?: 'High' | 'Medium' | 'Low';
+  priority?: 'High' | 'Medium' | 'Low' | 'None';
   completed: boolean;
 }
 
 export type TaskField = keyof Task;
 const DISPLAY_COLUMNS: TaskField[] = ['title', 'date', 'priority', 'completed'];
 const DATA: Task[] = [
-  { id: 1, title: 'Buy groceries', date: new Date('2022-01-01'), priority: 'High', completed: false },
+  { id: 1, title: 'Buy groceries', date: new Date('2022-01-01'), priority: 'None', completed: false },
   { id: 2, title: 'Do laundry', date: new Date('2022-01-02'), priority: 'Medium', completed: true },
   { id: 3, title: 'Clean the house', date: new Date('2022-01-03'), priority: 'Low', completed: false },
   { id: 4, title: 'Go to the gym', date: new Date('2022-01-04'), priority: 'High', completed: true },

@@ -5,6 +5,21 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+
+    .mat-button-toggle-checked{
+      &[value="low"] {
+        background-color: var(--sys-priority-background-low);
+      }
+      &[value="medium"] {
+        background-color: var(--sys-priority-background-medium);
+      }
+      &[value="high"] {
+        background-color: var(--sys-priority-background-high);
+      }
+      &[value="none"] {
+        background-color: var(--sys-priority-background-none);
+      }
+    }
   }
 
   &__actions {

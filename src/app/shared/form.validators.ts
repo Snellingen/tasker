@@ -11,7 +11,8 @@ export function ValidateDateInFuture(control: AbstractControl) {
 
 export function ValidatePriority(control: AbstractControl) {
   const priority = control.value?.toLowerCase();
-  if (priority === 'high' || priority === 'medium' || priority === 'low') {
+  const acceptedPriorities = ['high', 'medium', 'low', 'none'];
+  if (acceptedPriorities.includes(priority)) {
     return null;
   }
   return { invalidPriority: true };

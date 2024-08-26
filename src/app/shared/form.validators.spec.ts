@@ -35,6 +35,12 @@ describe('Form Validators', () => {
       expect(result).toBeNull();
     });
 
+    it('should return null for a valid priority "None"', () => {
+      const control = new FormControl('None');
+      const result = ValidatePriority(control);
+      expect(result).toBeNull();
+    });
+
     it('should return an error object for an invalid priority', () => {
       const control = new FormControl('InvalidPriority');
       const result = ValidatePriority(control);

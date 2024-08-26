@@ -125,6 +125,10 @@ body {
   --sys-priority-medium: rgb(255, 209, 102);
   --sys-priority-high: rgb(239, 71, 111);
   --sys-priority-none: rgb(197, 215, 227);
+  --sys-priority-background-low: rgb(17, 138, 178, 0.3);
+  --sys-priority-background-medium: rgb(255, 209, 102, 0.3);
+  --sys-priority-background-high: rgb(239, 71, 111, 0.3);
+  --sys-priority-background-none: rgb(197, 215, 227, 0.3);
   --sys-priority-high-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-high), var(--sys-priority-gradient-mix-color) 80%);
   --sys-priority-medium-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-medium), var(--sys-priority-gradient-mix-color) 80%);
   --sys-priority-low-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-low), var(--sys-priority-gradient-mix-color) 80%);
@@ -189,6 +193,7 @@ body {
     --sys-priority-medium: rgb(255, 209, 102);
     --sys-priority-high: rgb(239, 71, 111);
     --sys-priority-none: rgb(197, 215, 227);
+
     --sys-priority-gradient-mix-color:  black 50%;
 
     --mat-app-surface: var(--sys-surface);

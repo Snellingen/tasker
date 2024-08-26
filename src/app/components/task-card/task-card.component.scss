@@ -76,6 +76,10 @@
         top: 0;
         background-color: var(--priority-none);
 
+        background-color: var(--sys-priority-none);
+        box-shadow:
+        0 0 200px 50px color-mix(in srgb, var(--sys-priority-none), var(--sys-priority-gradient-mix-color));
+
         &--low {
             background-color: var(--sys-priority-low);
             box-shadow:
