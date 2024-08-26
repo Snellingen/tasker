@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, map, of } from 'rxjs';
+import { BehaviorSubject, delay, filter, map, of, startWith, tap } from 'rxjs';
 
 export interface Task {
   id: number;
@@ -86,8 +86,9 @@ export class TaskService {
 
   rawTasks = DATA;
 
-  tasks$ = of(this.rawTasks);
   displayedColumns$ = of(DISPLAY_COLUMNS);
+  tasks$ = of(this.rawTasks).pipe(delay(5000), tap(() => this.isLoading$.next(false)));
+  isLoading$ = new BehaviorSubject(true);
 
   addTask(task: Task) {
     this.rawTasks.push(task);

@@ -60,6 +60,7 @@ export class TaskOverviewComponent {
     map(sort => sort.selectedSort !== 'custom')
   );
 
+  isLoading$ = this.taskService.isLoading$;
   tasks$ = this.taskService.tasks$;
   filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
     map(([filterValues, tasks]) => {

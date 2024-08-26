@@ -24,13 +24,13 @@ export class CardListComponent {
 
   @Input() dataSource: Task[] | null = [];
   @Input() disableDrag: boolean | null = false;
+  @Input() loading: boolean | null = false;
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
   @ViewChild('viewport', { static: true }) viewport!: CdkVirtualScrollViewport;
 
   itemPixelSize = 62;
   minBufferPx = 2 * this.itemPixelSize;
   maxBufferPx = 2 * this.itemPixelSize;
-
   lastDragIndex: number = -1;
   idKey = 'task_';
 

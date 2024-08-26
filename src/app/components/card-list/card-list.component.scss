@@ -16,6 +16,12 @@
       gap: 10px;
     }
   }
+
+  &__skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .cdk-drag-animating {

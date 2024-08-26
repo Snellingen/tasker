@@ -106,12 +106,12 @@ body {
   --sys-secondary-fixed: #f0e1bf;
   --sys-secondary-fixed-dim: #d3c5a5;
   --sys-shadow: #000000;
-  --sys-surface: #fffbff;
+  --sys-surface: #e5e3de;
   --sys-surface-bright: #fff8f1;
   --sys-surface-container: #f4ede4;
-  --sys-surface-container-high: #eee7df;
+  --sys-surface-container-high: #f5f2ef;
   --sys-surface-container-highest: #e8e1d9;
-  --sys-surface-container-low: #faf3ea;
+  --sys-surface-container-low: #cac5ba;
   --sys-surface-container-lowest: #ffffff;
   --sys-surface-dim: #e0d9d1;
   --sys-surface-tint: #735c00;
@@ -129,10 +129,10 @@ body {
   --sys-priority-background-medium: rgb(255, 209, 102, 0.3);
   --sys-priority-background-high: rgb(239, 71, 111, 0.3);
   --sys-priority-background-none: rgb(197, 215, 227, 0.3);
-  --sys-priority-high-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-high), var(--sys-priority-gradient-mix-color) 80%);
-  --sys-priority-medium-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-medium), var(--sys-priority-gradient-mix-color) 80%);
-  --sys-priority-low-box-shadow:  0 0 100px 30px color-mix(in srgb, var(--sys-priority-low), var(--sys-priority-gradient-mix-color) 80%);
-  --sys-priority-gradient-mix-color:  white 70%;
+  --sys-priority-gradient-mix-color:  white 50%;
+
+  --sys-skeleton-background: var(--sys-surface-container-low);
+  --sys-skeleton-background-gradient: linear-gradient(110deg, var(--sys-surface-container-low) 8%, var(--sys-surface-container-high) 18%, var(--sys-surface-container-low) 33%);
 
 
   --mat-app-surface: var(--sys-surface);

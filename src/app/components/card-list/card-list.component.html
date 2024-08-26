@@ -1,4 +1,15 @@
 <div class="card-list" #wrapper>
+  @if (loading) {
+<div class='card-list__skeleton'>
+      <app-task-card [task]="null"></app-task-card>
+      <app-task-card [task]="null"></app-task-card>
+      <app-task-card [task]="null"></app-task-card>
+      <app-task-card [task]="null"></app-task-card>
+      <app-task-card [task]="null"></app-task-card>
+      <app-task-card [task]="null"></app-task-card>
+</div>
+  }
+  @else {
   <cdk-virtual-scroll-viewport
     #viewport
     cdkDropList
@@ -15,4 +26,5 @@
       [task]="task">
       </app-task-card>
   </cdk-virtual-scroll-viewport>
+  }
 </div>

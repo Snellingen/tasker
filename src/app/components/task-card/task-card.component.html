@@ -17,5 +17,20 @@
         </div>
         <div class='task-card__priority-bar task-card__priority-bar--{{task.priority?.toLowerCase()}}'></div>
     </mat-card>
+} @else {
+    <!-- skeletion card -->
+    <mat-card class='task-card task-card task-card--skeleton'>
+        <div class='task-card__content'>
+            <div class='task-card__title'>
+                <p class='task-card__checkbox'></p>
+                <p class='task-card__title-text'></p>
+            </div>
+            <div class='task-card__info'>
+                <p class='task-card__date'></p>
+                <p class='task-card__priority'></p>
+            </div>
+        </div>
+        <div class='task-card__priority-bar task-card__priority-bar--none'></div>
+    </mat-card>
 }
 

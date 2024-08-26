@@ -12,6 +12,7 @@
     cursor: grab;
     -webkit-user-select: none;
     user-select: none;
+    overflow: hidden;
 
     &__content {
         display: flex;
@@ -74,8 +75,6 @@
         position: absolute;
         right: 0;
         top: 0;
-        background-color: var(--priority-none);
-
         background-color: var(--sys-priority-none);
         box-shadow:
         0 0 200px 50px color-mix(in srgb, var(--sys-priority-none), var(--sys-priority-gradient-mix-color));
@@ -98,4 +97,44 @@
             0 0 200px 50px color-mix(in srgb, var(--sys-priority-high), var(--sys-priority-gradient-mix-color));
         }
     }
+
+    &--skeleton {
+        .task-card {
+            &__title-text, &__checkbox, &__date, &__priority, &__priority-bar {
+                background: var(--sys-skeleton-background-gradient);
+                border-radius: 5px;
+                background-size: 200% 100%;
+                animation: 1.5s shine linear infinite;
+            }
+
+            &__priority-bar {
+                background: var(--sys-skeleton-background) !important;
+                border-radius: 0px;
+                animation: none;
+            }
+
+            &__title-text {
+                width: 200px;
+                height: 30px;
+            }
+            &__checkbox {
+                background: var(--sys-skeleton-background) !important;
+                margin-left: 10px;
+                width: 20px;
+                height: 20px;
+                animation: none;
+            }
+            &__date, &__priority {
+                margin: 0px;
+                height: 20px;
+                width: 100px;
+            }
+        }
+    }
+
+    @keyframes shine {
+        to {
+          background-position-x: -200%;
+        }
+      }
 }
