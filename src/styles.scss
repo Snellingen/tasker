@@ -1,24 +1,137 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use './m3-theme.scss' as my-theme;
+// Plus imports for other components in your app.
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+
+// Define the theme object.
+// $tasker-theme: mat.define-theme((
+//   color: (
+//     theme-type: light,
+//     primary: mat.$yellow-palette,
+//     tertiary: mat.$rose-palette,
+//     use-system-variables: true,
+//   ),
+//   typography: (
+//     use-system-variables: true,
+//   ),
+//   density: (
+//     scale: 0,
+//   )
+// ));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes(my-theme.$light-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($todo-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($todo-theme);
+
+
+// @mixin my-comp-theme($theme) {
+//   @if (mat.get-theme-version($theme) == 1) {
+//     body {
+//       background-color: green !important
+//     }
+//   } @else {
+//     body {
+//       background-color: red !important
+//     }
+//   }
+// }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--sys-background);
+}
 
 
 :root {
-  --primary-color: rgba(255, 107, 107);
-  --secondary-color: rgb(255, 209, 102);
-  --success-color: rgb(6, 214, 160);
-  --danger-color: rgb(239, 71, 111);
-  --warning-color: rgb(255, 209, 102);
-  --info-color: rgb(17, 138, 178);
-  --light-color: rgb(234, 226, 183);
-  --dark-color: rgb(7, 59, 76);
+  @include mat.all-component-themes(my-theme.$light-theme);
+  @include mat.system-level-typography(my-theme.$light-theme);
 
-  --priority-low: rgb(17, 138, 178);
-  --priority-medium: rgb(255, 209, 102);
-  --priority-high: rgb(239, 71, 111);
-  --priority-none: rgb(197, 215, 227);
+  --sys-background: #eff3f2;
+  --sys-error: #ba1a1a;
+  --sys-error-container: #ffdad6;
+  --sys-inverse-on-surface: #f7f0e7;
+  --sys-inverse-primary: #e6c358;
+  --sys-inverse-surface: #33302b;
+  --sys-on-background: #1e1b16;
+  --sys-on-error: #ffffff;
+  --sys-on-error-container: #410002;
+  --sys-on-primary: #ffffff;
+  --sys-on-primary-container: #231a00;
+  --sys-on-primary-fixed: #231a00;
+  --sys-on-primary-fixed-variant: #574500;
+  --sys-on-secondary: #ffffff;
+  --sys-on-secondary-container: #221b06;
+  --sys-on-secondary-fixed: #221b06;
+  --sys-on-secondary-fixed-variant: #4f462d;
+  --sys-on-surface: #3b362d;
+  --sys-on-surface-variant: #4d4636;
+  --sys-on-tertiary: #ffffff;
+  --sys-on-tertiary-container: #06200e;
+  --sys-on-tertiary-fixed: #06200e;
+  --sys-on-tertiary-fixed-variant: #324d36;
+  --sys-outline: #7e7664;
+  --sys-outline-variant: #d0c6b1;
+  --sys-primary: #735c00;
+  --sys-primary-container: #ffe087;
+  --sys-primary-fixed: #ffe087;
+  --sys-primary-fixed-dim: #e6c358;
+  --sys-scrim: #000000;
+  --sys-secondary: #685e43;
+  --sys-secondary-container: #f0e1bf;
+  --sys-secondary-fixed: #f0e1bf;
+  --sys-secondary-fixed-dim: #d3c5a5;
+  --sys-shadow: #000000;
+  --sys-surface: #fffbff;
+  --sys-surface-bright: #fff8f1;
+  --sys-surface-container: #f4ede4;
+  --sys-surface-container-high: #eee7df;
+  --sys-surface-container-highest: #e8e1d9;
+  --sys-surface-container-low: #faf3ea;
+  --sys-surface-container-lowest: #ffffff;
+  --sys-surface-dim: #e0d9d1;
+  --sys-surface-tint: #735c00;
+  --sys-surface-variant: #ece1cc;
+  --sys-tertiary: #4a654d;
+  --sys-tertiary-container: #cbebcc;
+  --sys-tertiary-fixed: #cbebcc;
+  --sys-tertiary-fixed-dim: #b0ceb1;
 
-  --text-color: rgb(7, 59, 76);
-  --text-secondary: rgb(107, 119, 140);
+  --sys-priority-low: rgb(17, 138, 178);
+  --sys-priority-medium: rgb(255, 209, 102);
+  --sys-priority-high: rgb(239, 71, 111);
+  --sys-priority-none: rgb(197, 215, 227);
 }
 
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

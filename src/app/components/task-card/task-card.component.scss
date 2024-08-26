@@ -27,7 +27,7 @@
         flex-direction: row;
         align-items: center;
         max-width: 300px;
-        color: var(--text-color);
+        color: var(--sys-on-surface);
     }
     &__checkbox {
         margin-right: 10px;
@@ -41,7 +41,7 @@
         align-items: center;
         font-size: 0.8rem;
         gap: 10px;
-        color: var(--text-secondary);
+        color: var(--sys-on-surface);
     }
 
     &__date {
@@ -49,7 +49,7 @@
         flex-direction: row;
         align-items: center;
         font-size: 0.8rem;
-        color: var(--text-secondary);
+        color: var(--sys-on-surface);
         max-width: 200px;
     }
 
@@ -58,7 +58,7 @@
         flex-direction: row;
         align-items: center;
         font-size: 0.8rem;
-        color: var(--text-secondary);
+        color: var(--sys-on-surface);
         max-width: 200px;
     }
 
@@ -77,21 +77,21 @@
         background-color: var(--priority-none);
 
         &--low {
-            background-color: var(--priority-low);
+            background-color: var(--sys-priority-low);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--priority-low), white 80%);
+            0 0 100px 30px color-mix(in srgb, var(--sys-priority-low), white 80%);
         }
 
         &--medium {
-            background-color: var(--priority-medium);
+            background-color: var(--sys-priority-medium);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--priority-medium), white 80%);
+            0 0 100px 30px color-mix(in srgb, var(--sys-priority-medium), white 80%);
         }
 
         &--high {
-            background-color: var(--priority-high);
+            background-color: var(--sys-priority-high);
             box-shadow:
-            0 0 100px 30px color-mix(in srgb, var(--priority-high), white 80%);
+            0 0 100px 30px color-mix(in srgb, var(--sys-priority-high), white 80%);
         }
     }
 }
