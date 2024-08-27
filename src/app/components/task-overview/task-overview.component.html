@@ -1,7 +1,7 @@
 <div class="task-overview">
 
-  <app-stacked-bar [data]="stackedBarCompletionData$ | async"></app-stacked-bar>
   <app-stacked-bar [data]="stackedBarPriorityData$ | async"></app-stacked-bar>
+  <app-stacked-bar [data]="stackedBarCompletionData$ | async"></app-stacked-bar>
 
   @if(showEditTask) {
     <app-edit-task class="task-overview__edit" [id]="selectedTaskId" (onClose)="onEditClose()"></app-edit-task>
@@ -30,10 +30,10 @@
           [hideMultipleSelectionIndicator]="true"
           multiple
         >
-          <mat-button-toggle value="high">High</mat-button-toggle>
-          <mat-button-toggle value="medium">Medium</mat-button-toggle>
-          <mat-button-toggle value="low">Low</mat-button-toggle>
-          <mat-button-toggle value="none">None</mat-button-toggle>
+        <mat-button-toggle value="low">Low</mat-button-toggle>
+        <mat-button-toggle value="medium">Medium</mat-button-toggle>
+        <mat-button-toggle value="high">High</mat-button-toggle>
+        <mat-button-toggle value="none">None</mat-button-toggle>
         </mat-button-toggle-group>
       </section>
     </div>
