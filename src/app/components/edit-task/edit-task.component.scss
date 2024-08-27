@@ -24,4 +24,10 @@
     justify-content: center;
     gap: 10px;
   }
+
+  &__submit-error {
+    display: flex;
+    justify-content: center;
+    color: var(--sys-error);
+  }
 }

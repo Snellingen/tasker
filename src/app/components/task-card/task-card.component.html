@@ -9,9 +9,13 @@
             <div class='task-card__info'>
                 @if (task.date) {
                     <mat-card-subtitle class='task-card__date'><mat-icon>calendar_month</mat-icon> {{ task.date | dateToString: 'short' }}</mat-card-subtitle>
+                } @else {
+                    <mat-card-subtitle class='task-card__date'><mat-icon>calendar_month</mat-icon>None</mat-card-subtitle>
                 }
                 @if (task.priority) {
                     <mat-card-subtitle class='task-card__priority'><mat-icon>priority_high</mat-icon>{{ task.priority }}</mat-card-subtitle>
+                } @else {
+                    <mat-card-subtitle class='task-card__priority'><mat-icon>priority_high</mat-icon>None</mat-card-subtitle>
                 }
             </div>
         </div>

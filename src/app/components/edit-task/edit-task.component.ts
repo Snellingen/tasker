@@ -22,7 +22,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './edit-task.component.html',
@@ -60,6 +60,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   taskSubscription: Subscription | undefined;
 
   submitLabel = 'Add Task';
+  validationError: string|undefined = undefined;
 
   getDataForTaskForm() {
     if (!this.id) return;
@@ -78,6 +79,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
 
   onSubmit() {
     if (this.taskForm.valid) {
+      this.validationError = undefined;
       if (this.id) {
         const updatedTask = { ...this.taskForm.value, id: this.id } as Partial<Task> & { id: number };
         this.taskService.updateTask(updatedTask);
@@ -86,6 +88,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
         this.taskService.addTask(newTask);
       }
     } else {
+      this.validationError = 'Form is invalid. Please check the fields and try again.';
     }
   }
 

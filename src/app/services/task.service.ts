@@ -14,7 +14,6 @@ export interface Task {
 export interface TaskFilters {
   completionStatusFilters: string[];
   priorityFilters: string[];
-
 }
 
 export type SortingField = TaskField | 'custom';
@@ -161,7 +160,7 @@ export class TaskService {
   }
 
   addTask(task: Partial<Task> & { title: string }) {
-    const id = this.cachedTasks.length + 1;
+    const id = Math.floor(Math.random() * Math.pow(10, 15));
     const newTask = { id, ...task, completed: false };
     this.cachedTasks.push(newTask);
     this.tasks$.next(this.cachedTasks);
@@ -201,7 +200,10 @@ export class TaskService {
       return DATA;
     }
     const storedJsonTasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as Task & { date: string } [] ;
-    const storedTasks = storedJsonTasks.map((task, index) => ({ ...task, date: new Date(task.date) })) as Task[];
+    const storedTasks = storedJsonTasks.map((task, index) => {
+      const date = task.date ? new Date(task.date) : undefined;
+      return { ...task, date: date } as Task
+    }) as Task[];
     console.log('Stored tasks', storedTasks);
     if (storedTasks.length === 0) {
       console.log('No tasks found in local storage, using mock data');

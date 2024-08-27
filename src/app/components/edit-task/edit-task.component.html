@@ -12,8 +12,9 @@
       formControlName="title"
       required
     >
+    <mat-hint>(Required) Enter a task title</mat-hint>
     @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-      <mat-error>{{taskForm.get('title')?.errors | json}}</mat-error>
+      <mat-error>Please enter a title, at least 4 characters</mat-error>
     }
   </mat-form-field>
 </div>
@@ -31,8 +32,9 @@
       >
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+      <mat-hint>(Optional) Pick a due date</mat-hint>
       @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
-        <mat-error>{{taskForm.get('date')?.errors | json}}</mat-error>
+        <mat-error>Please use a valid date</mat-error>
       }
     </mat-form-field>
     <mat-form-field>
@@ -41,15 +43,16 @@
       id="priority"
       name="priority"
       formControlName="priority"
-      placeholder="(Optional) Select a priority level"
+      placeholder="(Optional) Select priority"
       [compareWith]="comparePriority"
       >
         @for (priority of priorityOptions; track priority) {
           <mat-option [value]="priority.toLowerCase()">{{priority}}</mat-option>
         }
       </mat-select>
+      <mat-hint>(Optional) Select priority</mat-hint>
       @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
-        <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>
+        <mat-error>Please select a priority</mat-error>
       }
     </mat-form-field>
   </div>
@@ -59,5 +62,9 @@
       <button mat-flat-button type="button" (click)="onDelete()" color="warn">Delete</button>
     }
   </div>
+
+  @if (validationError) {
+    <mat-error class='edit-task__submit-error'>{{validationError}}</mat-error>
+  }
 
 </form>
