@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ListComponent } from '../list/list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,13 +8,12 @@ import { MatOption } from '@angular/material/core';
 import { AsyncPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, map, startWith, tap, } from 'rxjs';
-import { TaskService } from '../../services/task.service';
+import {  map, startWith, Subscription, tap, } from 'rxjs';
+import { SortingDirection, SortingFields, Task, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { compareCompleted, compareDate, comparePriority, compareString } from '../../shared/compare';
 
 @Component({
   selector: 'app-task-overview',
@@ -39,71 +38,57 @@ import { compareCompleted, compareDate, comparePriority, compareString } from '.
   styleUrl: './task-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskOverviewComponent {
+export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   taskService = inject(TaskService);
   router = inject(Router);
 
 
   filterGroup = new FormGroup({
-    completionStatusFilters: new FormControl(),
-    priorityFilters: new FormControl()
+    completionStatusFilters: new FormControl<string[]>([]),
+    priorityFilters: new FormControl<string[]>([])
   });
 
   sortGroup = new FormGroup({
-    selectedSort: new FormControl('custom'),
-    selectedSortDirection: new FormControl('asc')
+    selectedSort: new FormControl<SortingFields>('custom'),
+    selectedSortDirection: new FormControl<SortingDirection>('asc')
   });
 
-  filter$ = this.filterGroup.valueChanges.pipe(startWith(this.filterGroup.value));
   disableDrag$ = this.sortGroup.valueChanges.pipe(
     map(sort => sort.selectedSort !== 'custom')
   );
 
   isLoading$ = this.taskService.isLoading$;
-  tasks$ = this.taskService.tasks$;
-  filteredData$ = combineLatest([this.filter$, this.tasks$]).pipe(
-    map(([filterValues, tasks]) => {
-      const { completionStatusFilters, priorityFilters } = filterValues;
-      return tasks.filter(item => {
-        if (!completionStatusFilters || completionStatusFilters.length === 0) {
-          return true;
-        }
-        return completionStatusFilters.includes(item.completed ? 'completed' : 'incomplete');
-
-      }).filter(item => {
-        if (!priorityFilters || priorityFilters.length === 0) {
-          return true;
-        }
-        return priorityFilters.includes(item.priority?.toLowerCase() ?? '');
-      });
-    })
-  );
-
-  displayedColumns$ = this.taskService.displayedColumns$;
-
-  sort$ = this.sortGroup.valueChanges.pipe(startWith(this.sortGroup.value));
-
-  sortedData$ = combineLatest([this.filteredData$, this.sort$]).pipe(
-    map(([data, sort]) => {
-      const isAsc = sort.selectedSortDirection === 'asc';
-      if (sort.selectedSort === 'custom') {
-        return [...data]; // keeps the order as is from service
-      }
-      return [...data].sort((a, b) => {
-        switch (sort.selectedSort) {
-          case 'title': return compareString(a.title, b.title, isAsc);
-          case 'date': return compareDate(a.date, b.date, isAsc);
-          case 'priority': return comparePriority(a.priority, b.priority, isAsc);
-          case 'completed': return compareCompleted(a.completed, b.completed, isAsc);
-          default: return 0;
-        }
-      });
-    }),
-    );
+  tasks$ = this.taskService.filteredSortedTasks$;
 
   navigateToEditTask(item: any) {
     this.router.navigate(['edit-task', item.id]);
+  }
+
+  private filterSub: Subscription | undefined;
+  private sortSub: Subscription | undefined;
+
+  ngOnInit() {
+    console.log('TaskOverviewComponent ngOnInit');
+    this.filterSub = this.filterGroup.valueChanges.pipe(
+      startWith(this.filterGroup.value
+    )).subscribe(filter => {
+        const taskFilters = filter as TaskFilters
+        console.log('filter', taskFilters);
+        this.taskService.setFilter(taskFilters);
+    });
+
+    this.sortSub = this.sortGroup.valueChanges.pipe(startWith(this.sortGroup.value))
+      .subscribe((sort) => {
+        const taskSort = sort as TaskSorting;
+        console.log('sort', taskSort);
+        this.taskService.setSort(taskSort);
+    });
+  }
+
+  ngOnDestroy() {
+    this.filterSub?.unsubscribe();
+    this.sortSub?.unsubscribe();
   }
 
 }

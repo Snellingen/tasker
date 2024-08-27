@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, filter, map, of, startWith, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, delay, filter, map, of, startWith, tap } from 'rxjs';
+import { compareCompleted, compareDate, comparePriority, compareString } from '../shared/compare';
 
 export interface Task {
   id: number;
@@ -7,6 +8,19 @@ export interface Task {
   date?: Date;
   priority?: 'High' | 'Medium' | 'Low' | 'None';
   completed: boolean;
+}
+
+export interface TaskFilters {
+  completionStatusFilters: string[];
+  priorityFilters: string[];
+
+}
+
+export type SortingFields = TaskField | 'custom';
+export type SortingDirection = 'asc' | 'desc';
+export interface TaskSorting {
+  selectedSort: SortingFields
+  selectedSortDirection: SortingDirection
 }
 
 export type TaskField = keyof Task;
@@ -86,9 +100,55 @@ export class TaskService {
 
   rawTasks = DATA;
 
-  displayedColumns$ = of(DISPLAY_COLUMNS);
-  tasks$ = of(this.rawTasks).pipe(delay(5000), tap(() => this.isLoading$.next(false)));
   isLoading$ = new BehaviorSubject(true);
+  displayedColumns$ = of(DISPLAY_COLUMNS);
+  tasks$ = of(this.rawTasks).pipe(delay(2000), tap(() => this.isLoading$.next(false)));
+  activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
+  activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
+
+  filteredTasks$ = combineLatest([this.activeFilter$, this.tasks$]).pipe(
+    map(([filterValues, tasks]) => {
+      const { completionStatusFilters, priorityFilters } = filterValues;
+      return tasks.filter(item => {
+        if (!completionStatusFilters || completionStatusFilters.length === 0) {
+          return true;
+        }
+        return completionStatusFilters.includes(item.completed ? 'completed' : 'incomplete');
+
+      }).filter(item => {
+        if (!priorityFilters || priorityFilters.length === 0) {
+          return true;
+        }
+        return priorityFilters.includes(item.priority?.toLowerCase() ?? '');
+      });
+    })
+  );
+
+  filteredSortedTasks$ = combineLatest([this.filteredTasks$, this.activeSort$]).pipe(
+    map(([data, sort]) => {
+      const isAsc = sort.selectedSortDirection === 'asc';
+      if (sort.selectedSort === 'custom') {
+        return [...data]; // keeps the order as is from service
+      }
+      return [...data].sort((a, b) => {
+        switch (sort.selectedSort) {
+          case 'title': return compareString(a.title, b.title, isAsc);
+          case 'date': return compareDate(a.date, b.date, isAsc);
+          case 'priority': return comparePriority(a.priority, b.priority, isAsc);
+          case 'completed': return compareCompleted(a.completed, b.completed, isAsc);
+          default: return 0;
+        }
+      });
+    }),
+  );
+
+  setFilter(filter: TaskFilters) {
+    this.activeFilter$.next(filter);
+  }
+
+  setSort(sort: TaskSorting) {
+    this.activeSort$.next(sort);
+  }
 
   addTask(task: Task) {
     this.rawTasks.push(task);

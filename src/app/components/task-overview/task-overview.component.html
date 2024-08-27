@@ -30,7 +30,7 @@
   </div>
   <br>
   <section class='task-overview__actions' [formGroup]="sortGroup">
-    <p>tasks: {{ (filteredData$| async)?.length }}/{{(tasks$ | async)?.length}}<p>
+    <!-- <p>tasks: {{ (tasks$| async)?.length }}/{{(tasks$ | async)?.length}}<p> -->
     <div class = 'task-overview__actions__sort'>
       <mat-form-field>
         <mat-label>Sort by:</mat-label>
@@ -56,5 +56,5 @@
     <app-card-list [loading]="true"></app-card-list>
   } -->
 
-  <app-card-list [dataSource]="sortedData$ | async" [disableDrag]="disableDrag$ | async" [loading]="isLoading$ | async" ></app-card-list>
+  <app-card-list [dataSource]="tasks$ | async" [disableDrag]="disableDrag$ | async" [loading]="isLoading$ | async" ></app-card-list>
 </div>
