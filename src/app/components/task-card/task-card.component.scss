@@ -33,37 +33,31 @@
         margin-right: 10px;
     }
 
+    mat-card-subtitle {
+        mat-icon {
+            transform: scale(0.7);
+        }
+    }
+
     &__info {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        display: flex;
+        margin-top: 20px;
+        margin-bottom: 20px;
         flex-direction: column;
-        align-items: center;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
         font-size: 0.8rem;
-        gap: 10px;
         color: var(--sys-on-surface);
     }
 
-    &__date {
+    &__date, &__priority {
         display: flex;
         flex-direction: row;
         align-items: center;
         font-size: 0.8rem;
+        justify-content: end;
         color: var(--sys-on-surface);
-        max-width: 200px;
-    }
-
-    &__priority {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-size: 0.8rem;
-        color: var(--sys-on-surface);
-        max-width: 200px;
-    }
-
-    mat-icon {
-        font-size: 1.2rem;
+        text-transform: capitalize;
     }
 
     &__priority-bar {
