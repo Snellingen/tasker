@@ -18,6 +18,8 @@
     height: 100%;
 
     &__label {
+      text-wrap: nowrap;
+      overflow: hidden;
       font-size: 16px;
       font-weight: 500;
       color: var(--stack-label-color);
