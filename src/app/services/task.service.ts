@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, delay, filter, map, of, startWith, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, delay, filter, map, of, shareReplay, startWith, tap } from 'rxjs';
 import { compareCompleted, compareDate, comparePriority, compareString } from '../shared/compare';
 
 export interface Task {
@@ -102,7 +102,7 @@ export class TaskService {
 
   isLoading$ = new BehaviorSubject(true);
   displayedColumns$ = of(DISPLAY_COLUMNS);
-  tasks$ = of(this.rawTasks).pipe(delay(2000), tap(() => this.isLoading$.next(false)));
+  tasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)), shareReplay());
   activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
   activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
 

@@ -50,11 +50,5 @@
       </mat-form-field>
     </div>
   </section>
-  <!-- @if (((tasks$ | async)||[]).length > 0) {
-    <app-card-list [dataSource]="sortedData$ | async" [disableDrag]="disableDrag$ | async" ></app-card-list>
-  } @else {
-    <app-card-list [loading]="true"></app-card-list>
-  } -->
-
   <app-card-list [dataSource]="tasks$ | async" [disableDrag]="disableDrag$ | async" [loading]="isLoading$ | async" ></app-card-list>
 </div>
