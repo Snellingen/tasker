@@ -1,5 +1,7 @@
 <div class="task-overview">
 
+  <app-stacked-bar [data]="stackedBarData$ | async"></app-stacked-bar>
+
   @if(showEditTask) {
     <app-edit-task class="task-overview__edit" [id]="selectedTaskId" (onClose)="onEditClose()"></app-edit-task>
   }

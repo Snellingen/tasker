@@ -15,6 +15,7 @@ import { CardListComponent } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { StackedBarComponent } from '../stacked-bar/stacked-bar.component';
 
 @Component({
   selector: 'app-task-overview',
@@ -34,7 +35,8 @@ import { EditTaskComponent } from '../edit-task/edit-task.component';
     CardListComponent,
     MatButtonToggleModule,
     MatCheckboxModule,
-    EditTaskComponent
+    EditTaskComponent,
+    StackedBarComponent
   ],
   templateUrl: './task-overview.component.html',
   styleUrl: './task-overview.component.scss',
@@ -63,6 +65,25 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   isLoading$ = this.taskService.isLoading$;
   tasks$ = this.taskService.filteredSortedTasks$;
+
+  stackedBarData$ = this.taskService.tasks$.pipe(
+    map(tasks => {
+      const total = tasks.length;
+      const completed = tasks.filter(t => t.completed).length;
+      // const inProgress = tasks.filter(t => !t.completed).length;
+      const lowPriority = tasks.filter(t => t.priority && t.priority === 'Low').length;
+      const mediumPriority = tasks.filter(t => t.priority === 'Medium').length;
+      const highPriority = tasks.filter(t => t.priority === 'High').length;
+      const noPriority = tasks.filter(t => t.priority === 'None').length;
+      return [
+        { label: `Done (${completed})`, value: completed },
+        { label: `Low (${lowPriority})`, value: lowPriority },
+        { label: `Medium (${mediumPriority})`, value: mediumPriority },
+        { label: `High (${highPriority})`, value: highPriority },
+        { label: `None (${noPriority})`, value: noPriority }
+      ];
+    })
+  );
 
   showEditTask = false;
   selectedTaskId: number | undefined;
