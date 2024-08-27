@@ -26,7 +26,7 @@ export class CardListComponent {
   @Input() disableDrag: boolean | null = false;
   @Input() loading: boolean | null = false;
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
-  @ViewChild('viewport', { static: true }) viewport!: CdkVirtualScrollViewport;
+  @ViewChild('viewport', { static: false }) viewport!: CdkVirtualScrollViewport;
 
   itemPixelSize = 62;
   minBufferPx = 2 * this.itemPixelSize;
@@ -39,6 +39,7 @@ export class CardListComponent {
 
   onItemDrop(event: any) {
     if (this.dataSource === null) return;
+    if (this.viewport === null) return;
     const vsStartIndex = this.viewport.getRenderedRange().start;
     moveItemInArray(this.dataSource, event.previousIndex + vsStartIndex, event.currentIndex + vsStartIndex);
     this.dataSource = [...this.dataSource];

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidateDateInFuture, ValidatePriority } from '../../shared/form.validators';
-import { Task, TaskService } from '../../services/task.service';
-import { tap } from 'rxjs';
+import { Priority, Task, TaskService } from '../../services/task.service';
+import { Subscription, tap } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,23 +41,29 @@ export class EditTaskComponent implements OnInit, OnDestroy{
       Validators.required,
       Validators.minLength(4)
     ]),
-    date: new FormControl<Date>(new Date(), ValidateDateInFuture),
-    priority: new FormControl('', ValidatePriority)
+    date: new FormControl<Date|undefined>(undefined, ValidateDateInFuture),
+    priority: new FormControl('None', ValidatePriority)
   });
 
-  taskSubscription = this.taskService.tasks$.subscribe();
+  priorityOptions: Priority[] = ['None', 'Low', 'Medium', 'High'];
 
-  ngOnInit() {
-    if (this.id) {
-      this.pageTitle = 'Edit Task ' + this.id;
-      this.taskSubscription = this.taskService.getTaskById$(Number(this.id)).pipe(
-        tap(task => {
-          if (task) {
-            this.taskForm.patchValue(task);
-          }
+  taskSubscription: Subscription | undefined;
+
+  getDataForTaskForm() {
+    if (!this.id) return;
+    this.pageTitle = 'Edit Task ' + this.id;
+    this.taskSubscription = this.taskService.getTaskById$(Number(this.id)).pipe(
+      tap(task => {
+        if (task) {
+          console.log('patch', task);
+          this.taskForm.patchValue(task);
         }
-      )).subscribe()
-    }
+      }
+    )).subscribe()
+  }
+
+  comparePriority(a: string, b: string) {
+    return a.toLowerCase() === b.toLowerCase();
   }
 
   onSubmit() {
@@ -73,8 +79,12 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     }
   }
 
+  ngOnInit() {
+    this.getDataForTaskForm();
+  }
+
   ngOnDestroy(): void {
-    this.taskSubscription.unsubscribe();
+    this.taskSubscription?.unsubscribe();
   }
 
 }

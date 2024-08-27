@@ -1,6 +1,11 @@
 <div class="task-overview">
+
+  @if(!showEditTask) {
+    <app-edit-task [id]="selectedTaskId"></app-edit-task>
+  }
+
   <section class='task-overview__actions' [formGroup]="sortGroup">
-    <button class='task-overview__actions__add' mat-flat-button [routerLink]="'/edit-task'"><mat-icon>add</mat-icon> Add Task </button>
+    <button class='task-overview__actions__add' mat-flat-button (click)="onNewTaskClick()"><mat-icon>add</mat-icon> Add Task </button>
 
     <div class="task-overview__actions__filter" [formGroup]="filterGroup">
       <section>

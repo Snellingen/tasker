@@ -1,14 +1,31 @@
 <form class="edit-task" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label for="title">Title:</mat-label>
-    <input matInput placeholder="Awesome thing to do" type="text" id="title" name="title" formControlName="title" required>
+    <input
+      matInput
+      placeholder="(Required) Enter a task title"
+      title='Enter task title'
+      type="text"
+      id="title"
+      name="title"
+      formControlName="title"
+      required
+    >
     @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
       <mat-error>{{taskForm.get('title')?.errors | json}}</mat-error>
     }
   </mat-form-field>
   <mat-form-field>
     <mat-label for="date">Date:</mat-label>
-    <input matInput [matDatepicker]="picker" id="date" name="date" formControlName="date">
+    <input
+      matInput
+      placeholder="(Optional) Pick a due date"
+      [matDatepicker]="picker"
+      title="Select date"
+      id="date"
+      name="date"
+      formControlName="date"
+    >
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
@@ -17,10 +34,16 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label for="priority">Priority:</mat-label>
-    <mat-select id="priority" name="priority" formControlName="priority">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
+    <mat-select
+    id="priority"
+    name="priority"
+    formControlName="priority"
+    placeholder="(Optional) Select a priority level"
+    [compareWith]="comparePriority"
+    >
+      @for (priority of priorityOptions; track priority) {
+        <mat-option [value]="priority.toLowerCase()">{{priority}}</mat-option>
+      }
     </mat-select>
     @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
       <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>

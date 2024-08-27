@@ -14,6 +14,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { EditTaskComponent } from '../edit-task/edit-task.component';
 
 @Component({
   selector: 'app-task-overview',
@@ -33,6 +34,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     CardListComponent,
     MatButtonToggleModule,
     MatCheckboxModule,
+    EditTaskComponent
   ],
   templateUrl: './task-overview.component.html',
   styleUrl: './task-overview.component.scss',
@@ -61,12 +63,15 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   isLoading$ = this.taskService.isLoading$;
   tasks$ = this.taskService.filteredSortedTasks$;
 
-  navigateToEditTask(item: any) {
-    this.router.navigate(['edit-task', item.id]);
-  }
+  showEditTask = false;
+  selectedTaskId: string | undefined = "2";
 
   private filterSub: Subscription | undefined;
   private sortSub: Subscription | undefined;
+
+  onNewTaskClick() {
+    this.showEditTask = true;
+  }
 
   ngOnInit() {
     this.filterSub = this.filterGroup.valueChanges
@@ -82,7 +87,9 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
     });
 
     this.taskService.activeFilter$
-      .subscribe( filter => this.filterGroup.patchValue(filter, { emitEvent: false }));
+      .subscribe( filter => {
+        this.filterGroup.patchValue(filter, { emitEvent: false })
+      });
   }
 
   ngOnDestroy() {

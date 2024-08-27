@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, delay, filter, map, of, shareReplay, startWith, tap } from 'rxjs';
 import { compareCompleted, compareDate, comparePriority, compareString } from '../shared/compare';
 
+export type Priority = 'High' | 'Medium' | 'Low' | 'None';
 export interface Task {
   id: number;
   title?: string;
   date?: Date;
-  priority?: 'High' | 'Medium' | 'Low' | 'None';
+  priority?: Priority;
   completed: boolean;
 }
 
