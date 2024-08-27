@@ -9,7 +9,7 @@ import { AsyncPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {  map, startWith, Subscription, tap, } from 'rxjs';
-import { SortingDirection, SortingFields, Task, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
+import { SortingDirection, SortingField, Task, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -53,7 +53,7 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   });
 
   sortGroup = new FormGroup({
-    selectedSort: new FormControl<SortingFields>('custom'),
+    selectedSort: new FormControl<SortingField>('custom'),
     selectedSortDirection: new FormControl<SortingDirection>('asc')
   });
 
@@ -72,6 +72,7 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   onNewTaskClick() {
     this.showEditTask = true;
+    this.selectedTaskId = undefined;
   }
 
   onTaskClick(id: number) {

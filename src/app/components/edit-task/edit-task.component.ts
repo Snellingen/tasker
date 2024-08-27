@@ -32,12 +32,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 export class EditTaskComponent implements OnInit, OnDestroy{
 
   taskService = inject(TaskService);
-
-  pageTitle = 'Edit Task';
   private _id: number | undefined;
-
   @Input() set id(value: number | undefined) {
     this._id = value;
+    if (value === undefined) {
+      this.taskForm.reset();
+    }
     this.getDataForTaskForm();
   }
   get id() {
@@ -58,7 +58,6 @@ export class EditTaskComponent implements OnInit, OnDestroy{
 
   getDataForTaskForm() {
     if (!this.id) return;
-    this.pageTitle = 'Edit Task ' + this.id;
     this.taskSubscription = this.taskService.getTaskById$(Number(this.id)).pipe(
       tap(task => {
         if (task) {

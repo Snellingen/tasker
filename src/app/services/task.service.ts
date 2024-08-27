@@ -17,10 +17,10 @@ export interface TaskFilters {
 
 }
 
-export type SortingFields = TaskField | 'custom';
+export type SortingField = TaskField | 'custom';
 export type SortingDirection = 'asc' | 'desc';
 export interface TaskSorting {
-  selectedSort: SortingFields
+  selectedSort: SortingField
   selectedSortDirection: SortingDirection
 }
 
@@ -99,12 +99,13 @@ const DATA: Task[] = [
 })
 export class TaskService {
 
-  rawTasks = DATA;
-
+  cachedTasks = DATA;
+  useLocalStorage = true;
   isLoading$ = new BehaviorSubject(true);
   displayedColumns$ = of(DISPLAY_COLUMNS);
   tasks$ = new BehaviorSubject<Task[]>([]);
-  fetchTasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
+  // fetchTasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
+  fetchTasks$ = of(this.getTaskFromLocalStorage()).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
 
   activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
   activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
@@ -147,31 +148,46 @@ export class TaskService {
 
   setFilter(filter: TaskFilters) {
     this.activeFilter$.next(filter);
+    if (this.useLocalStorage) {
+      localStorage.setItem('settings', JSON.stringify({ ...filter, ...this.activeSort$.value }));
+    }
   }
 
   setSort(sort: TaskSorting) {
     this.activeSort$.next(sort);
+    if (this.useLocalStorage) {
+      localStorage.setItem('settings', JSON.stringify({ ...this.activeFilter$.value, ...sort }));
+    }
   }
 
   addTask(task: Partial<Task> & { title: string }) {
-    const id = this.rawTasks.length + 1;
+    const id = this.cachedTasks.length + 1;
     const newTask = { id, ...task, completed: false };
-    this.rawTasks.push(newTask);
-    this.tasks$.next(this.rawTasks);
+    this.cachedTasks.push(newTask);
+    this.tasks$.next(this.cachedTasks);
+    if (this.useLocalStorage) {
+      localStorage.setItem('tasks', JSON.stringify(this.cachedTasks));
+    }
   }
 
   removeTask(id: number) {
-    this.rawTasks = this.rawTasks.filter(task => task.id !== id);
-    this.tasks$.next(this.rawTasks);
+    this.cachedTasks = this.cachedTasks.filter(task => task.id !== id);
+    this.tasks$.next(this.cachedTasks);
+    if (this.useLocalStorage) {
+      localStorage.setItem('tasks', JSON.stringify(this.cachedTasks));
+    }
   }
 
   updateTask(task: Partial<Task> & { id: number }) {
-    const index = this.rawTasks.findIndex(t => t.id === task.id);
+    const index = this.cachedTasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
-      this.rawTasks[index] = { ...this.rawTasks[index], ...task };
-      this.tasks$.next(this.rawTasks);
+      this.cachedTasks[index] = { ...this.cachedTasks[index], ...task };
+      this.tasks$.next(this.cachedTasks);
       console.log('Task updated', task);
-      console.log('Tasks', this.rawTasks);
+      console.log('Tasks', this.cachedTasks);
+      if (this.useLocalStorage) {
+        localStorage.setItem('tasks', JSON.stringify(this.cachedTasks));
+      }
     }
   }
 
@@ -179,7 +195,47 @@ export class TaskService {
     return this.tasks$.pipe( map(tasks => tasks.find(task => task.id === id)));
   }
 
+  getTaskFromLocalStorage() {
+    if (!this.useLocalStorage) {
+      console.log('Local storage disabled, using mock data');
+      return DATA;
+    }
+    const storedJsonTasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as Task & { date: string } [] ;
+    const storedTasks = storedJsonTasks.map((task, index) => ({ ...task, date: new Date(task.date) })) as Task[];
+    console.log('Stored tasks', storedTasks);
+    if (storedTasks.length === 0) {
+      console.log('No tasks found in local storage, using mock data');
+      localStorage.setItem('tasks', JSON.stringify(DATA));
+      return DATA;
+    }
+    console.log('Tasks found in local storage');
+    return storedTasks;
+  }
+
+  getSettingsFromLocalStorage() {
+    if (!this.useLocalStorage) {
+      console.log('Local storage disabled, using default settings');
+      return { completionStatusFilters: [], priorityFilters: [], selectedSort: 'custom', selectedSortDirection: 'asc' };
+    }
+    const storedSettings = JSON.parse(localStorage.getItem('settings') ?? '{}') as TaskFilters & TaskSorting;
+    console.log('Stored settings', storedSettings);
+    if (Object.keys(storedSettings).length === 0) {
+      console.log('No settings found in local storage, using default settings');
+      localStorage.setItem('settings', JSON.stringify({ completionStatusFilters: [], priorityFilters: [], selectedSort: 'custom', selectedSortDirection: 'asc' }));
+      return { completionStatusFilters: [], priorityFilters: [], selectedSort: 'custom', selectedSortDirection: 'asc' };
+    }
+    console.log('Settings found in local storage');
+    return storedSettings;
+  }
+
   constructor() {
-    this.fetchTasks$.subscribe(tasks => this.tasks$.next(tasks));
+    this.fetchTasks$.subscribe(tasks => {
+      this.cachedTasks = tasks;
+      this.tasks$.next(tasks);
+    });
+
+    const storedSettings = this.getSettingsFromLocalStorage();
+    this.activeFilter$.next({ completionStatusFilters: storedSettings.completionStatusFilters, priorityFilters: storedSettings.priorityFilters });
+    this.activeSort$.next({ selectedSort: storedSettings.selectedSort as SortingField, selectedSortDirection: storedSettings.selectedSortDirection as SortingDirection });
   }
 }
