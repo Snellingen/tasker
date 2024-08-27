@@ -87,8 +87,9 @@ export class TaskService {
   isLoading$ = new BehaviorSubject(true);
   displayedColumns$ = of(DISPLAY_COLUMNS);
   tasks$ = new BehaviorSubject<Task[]>([]);
-  // fetchTasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
-  fetchTasks$ = of(this.getTaskFromLocalStorage()).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
+
+  // ! Use DELAY to simulate a network request
+  fetchTasks$ = of(this.getTaskFromLocalStorage()).pipe(tap(() => this.isLoading$.next(false)));
 
   activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
   activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
@@ -143,7 +144,10 @@ export class TaskService {
     }
   }
 
-  addTask(task: Partial<Task> & { title: string }) {
+  addTask(task: Partial<Task>) {
+    if (!task.title) {
+      return;
+    }
     const id = Math.floor(Math.random() * Math.pow(10, 15));
     const newTask = { id, ...task, completed: false };
     this.cachedTasks.push(newTask);

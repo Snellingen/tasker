@@ -66,5 +66,5 @@ describe('Form Validators', () => {
       const result = ValidDate(control);
       expect(result).toEqual({ invalidDate: true });
     });
-  }
+  })
 });
