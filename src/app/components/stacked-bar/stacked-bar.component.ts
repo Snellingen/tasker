@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export type Stack = {
   label: string;
@@ -6,7 +6,7 @@ export type Stack = {
   colorIndex?: number;
 };
 
-type ComputedStack = Stack & { percentage: number };
+type ComputedStack = Stack & { percentage: number; };
 
 @Component({
   selector: 'app-stacked-bar',
@@ -30,7 +30,7 @@ export class StackedBarComponent {
       if (stack.colorIndex === undefined) {
         stack.colorIndex = index + 1;
       }
-      return {percentage: (stack.value / total * 100), ...stack} as ComputedStack;
+      return { percentage: (stack.value / total * 100), ...stack } as ComputedStack;
     }) as ComputedStack[];
   }
 

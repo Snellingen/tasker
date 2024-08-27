@@ -1,11 +1,11 @@
 <form class="edit-task" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div class='edit-task__input'>
+  <div class="edit-task__input">
   <mat-form-field>
     <mat-label for="title">Title:</mat-label>
     <input
       matInput
       placeholder="(Required) Enter a task title"
-      title='Enter task title'
+      title="Enter task title"
       type="text"
       id="title"
       name="title"
@@ -13,12 +13,12 @@
       required
     >
     <mat-hint>(Required) Enter a task title</mat-hint>
-    @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+    @if (taskForm.get("title")?.invalid && taskForm.get("title")?.touched) {
       <mat-error>Please enter a title, at least 4 characters</mat-error>
     }
   </mat-form-field>
 </div>
-  <div class='edit-task__options'>
+  <div class="edit-task__options">
     <mat-form-field>
       <mat-label for="date">Date:</mat-label>
       <input
@@ -33,7 +33,7 @@
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-hint>(Optional) Pick a due date</mat-hint>
-      @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
+      @if (taskForm.get("date")?.invalid && taskForm.get("date")?.touched) {
         <mat-error>Please use a valid date</mat-error>
       }
     </mat-form-field>
@@ -51,12 +51,12 @@
         }
       </mat-select>
       <mat-hint>(Optional) Select priority</mat-hint>
-      @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
+      @if (taskForm.get("priority")?.invalid && taskForm.get("priority")?.touched) {
         <mat-error>Please select a priority</mat-error>
       }
     </mat-form-field>
   </div>
-  <div class='edit-task__actions'>
+  <div class="edit-task__actions">
     <button mat-raised-button type="submit">{{submitLabel}}</button>
     <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
     @if (id) {
@@ -65,7 +65,7 @@
   </div>
 
   @if (validationError) {
-    <mat-error class='edit-task__submit-error'>{{validationError}}</mat-error>
+    <mat-error class="edit-task__submit-error">{{validationError}}</mat-error>
   }
 
 </form>

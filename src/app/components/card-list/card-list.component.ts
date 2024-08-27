@@ -4,7 +4,6 @@ import { TaskCardComponent } from '../task-card/task-card.component';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { ViewChild, ElementRef } from '@angular/core';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 export interface DropLocation {
   itemId: number;
@@ -17,7 +16,7 @@ export interface DropLocation {
   selector: 'app-card-list',
   standalone: true,
   imports: [
-    TaskCardComponent, 
+    TaskCardComponent,
     ScrollingModule,
     CdkDropList,
     CdkDrag

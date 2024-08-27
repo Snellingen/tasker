@@ -32,6 +32,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 export class EditTaskComponent implements OnInit, OnDestroy {
 
   taskService = inject(TaskService);
+
   private _id: number | undefined;
   @Input() set id(value: number | undefined) {
     this._id = value;
@@ -46,7 +47,6 @@ export class EditTaskComponent implements OnInit, OnDestroy {
   get id() {
     return this._id;
   }
-
   @Output() onClose = new EventEmitter<void>();
 
   taskForm = new FormGroup({
@@ -86,9 +86,11 @@ export class EditTaskComponent implements OnInit, OnDestroy {
       if (this.id) {
         const updatedTask = { ...this.taskForm.value, id: this.id } as Partial<Task> & { id: number; };
         this.taskService.updateTask(updatedTask);
+        // this.onClose.emit();
       } else {
         const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string; };
         this.taskService.addTask(newTask);
+        // this.onClose.emit();
       }
     } else {
       this.validationError = 'Form is invalid. Please check the fields and try again.';
@@ -100,6 +102,7 @@ export class EditTaskComponent implements OnInit, OnDestroy {
       this.taskService.removeTask(this.id);
       this.id = undefined;
       this.taskForm.reset();
+      // this.onClose.emit();
     }
   }
 

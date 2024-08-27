@@ -1,6 +1,6 @@
 <div class="card-list" #wrapper>
   @if (loading) {
-<div class='card-list__skeleton'>
+<div class="card-list__skeleton">
       <app-task-card [task]="null"></app-task-card>
       <app-task-card [task]="null"></app-task-card>
       <app-task-card [task]="null"></app-task-card>
@@ -14,8 +14,8 @@
     #viewport
     cdkDropList
     [cdkDropListDisabled]="disableDrag"
-    [cdkDropListData]='dataSource'
-    (cdkDropListDropped)='onItemDrop($event)'
+    [cdkDropListData]="dataSource"
+    (cdkDropListDropped)="onItemDrop($event)"
     appendOnly
     [itemSize]="itemPixelSize"
     [minBufferPx]="minBufferPx"

@@ -1,4 +1,3 @@
-  // TODO: create mock for ActiveRoute
 
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
 

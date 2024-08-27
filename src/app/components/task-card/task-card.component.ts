@@ -28,18 +28,16 @@ export class TaskCardComponent {
     completed: false,
     date: new Date(),
     priority: 'Low'
-  } as Task
+  } as Task;
   @Output() onClicked = new EventEmitter<number>();
-  @Output() onCheckedChanged = new EventEmitter<{id: number, checked: boolean}>();
+  @Output() onCheckedChanged = new EventEmitter<{ id: number, checked: boolean; }>();
 
   onTaskCompletedChange(event: MatCheckboxChange) {
     if (!this.task) return;
-    this.onCheckedChanged.emit({id: this.task.id, checked: event.checked});
+    this.onCheckedChanged.emit({ id: this.task.id, checked: event.checked });
   }
 
   onCheckClick(event: MouseEvent) {
     event.stopPropagation();
   }
-
-
 }

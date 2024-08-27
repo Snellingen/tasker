@@ -1,40 +1,40 @@
 
 @if (task){
-    <mat-card matRipple class='task-card' (click)='onClicked.emit(task.id)'>
-        <div class='task-card__content'>
-            <div class='task-card__title'>
-                <mat-checkbox (click)='onCheckClick($event)' class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange($event)'></mat-checkbox>
-                <span class='task-card__title-text' >{{ task.title }}</span>
+    <mat-card matRipple class="task-card" (click)="onClicked.emit(task.id)">
+        <div class="task-card__content">
+            <div class="task-card__title">
+                <mat-checkbox (click)="onCheckClick($event)" class="task-card__checkbox" [checked]="task.completed" (change)="onTaskCompletedChange($event)"></mat-checkbox>
+                <span class="task-card__title-text" >{{ task.title }}</span>
             </div>
-            <div class='task-card__info'>
+            <div class="task-card__info">
                 @if (task.date) {
-                    <mat-card-subtitle class='task-card__date'>{{ task.date | dateToString: 'short' }}<mat-icon>calendar_month</mat-icon></mat-card-subtitle>
+                    <mat-card-subtitle class="task-card__date">{{ task.date | dateToString: "short" }}<mat-icon>calendar_month</mat-icon></mat-card-subtitle>
                 } @else {
-                    <mat-card-subtitle class='task-card__date'>No due date<mat-icon>calendar_month</mat-icon></mat-card-subtitle>
+                    <mat-card-subtitle class="task-card__date">No due date<mat-icon>calendar_month</mat-icon></mat-card-subtitle>
                 }
                 @if (task.priority) {
-                    <mat-card-subtitle class='task-card__priority'>{{ task.priority }}<mat-icon>priority_high</mat-icon></mat-card-subtitle>
+                    <mat-card-subtitle class="task-card__priority">{{ task.priority }}<mat-icon>priority_high</mat-icon></mat-card-subtitle>
                 } @else {
-                    <mat-card-subtitle class='task-card__priority'>No priority<mat-icon>priority_high</mat-icon></mat-card-subtitle>
+                    <mat-card-subtitle class="task-card__priority">No priority<mat-icon>priority_high</mat-icon></mat-card-subtitle>
                 }
             </div>
         </div>
-        <div class='task-card__priority-bar task-card__priority-bar--{{task.priority?.toLowerCase()}}'></div>
+        <div class="task-card__priority-bar task-card__priority-bar--{{task.priority?.toLowerCase()}}"></div>
     </mat-card>
 } @else {
     <!-- skeletion card -->
-    <mat-card class='task-card task-card task-card--skeleton'>
-        <div class='task-card__content'>
-            <div class='task-card__title'>
-                <p class='task-card__checkbox'></p>
-                <p class='task-card__title-text'></p>
+    <mat-card class="task-card task-card task-card--skeleton">
+        <div class="task-card__content">
+            <div class="task-card__title">
+                <p class="task-card__checkbox"></p>
+                <p class="task-card__title-text"></p>
             </div>
-            <div class='task-card__info'>
-                <p class='task-card__date'></p>
-                <p class='task-card__priority'></p>
+            <div class="task-card__info">
+                <p class="task-card__date"></p>
+                <p class="task-card__priority"></p>
             </div>
         </div>
-        <div class='task-card__priority-bar task-card__priority-bar--none'></div>
+        <div class="task-card__priority-bar task-card__priority-bar--none"></div>
     </mat-card>
 }
 

@@ -22,7 +22,7 @@ export function ValidatePriority(control: AbstractControl) {
   return { invalidPriority: true };
 }
 
-export function ValidDate (control: AbstractControl) {
+export function ValidDate(control: AbstractControl) {
   if (!control.value) return null;
 
   const date = new Date(control.value);

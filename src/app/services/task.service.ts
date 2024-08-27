@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, delay, filter, map, of, shareReplay, startWith, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, of, tap } from 'rxjs';
 import { compareCompleted, compareDate, comparePriority, compareString } from '../shared/compare';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -20,8 +20,8 @@ export interface TaskFilters {
 export type SortingField = TaskField | 'custom';
 export type SortingDirection = 'asc' | 'desc';
 export interface TaskSorting {
-  selectedSort: SortingField
-  selectedSortDirection: SortingDirection
+  selectedSort: SortingField;
+  selectedSortDirection: SortingDirection;
 }
 
 export type TaskField = keyof Task;
@@ -76,12 +76,10 @@ const DATA: Task[] = [
   { id: 100000064, title: 'Go to the pool', date: new Date('2022-03-05'), priority: 'High', completed: true },
 ];
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-
   cachedTasks = DATA;
   useLocalStorage = true;
   isLoading$ = new BehaviorSubject(true);
@@ -91,7 +89,7 @@ export class TaskService {
   // ! Use DELAY to simulate a network request
   fetchTasks$ = of(this.getTaskFromLocalStorage()).pipe(tap(() => this.isLoading$.next(false)));
 
-  activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
+  activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] });
   activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
 
   filteredTasks$ = combineLatest([this.activeFilter$, this.tasks$]).pipe(
@@ -165,7 +163,7 @@ export class TaskService {
     }
   }
 
-  updateTask(task: Partial<Task> & { id: number }) {
+  updateTask(task: Partial<Task> & { id: number; }) {
     const index = this.cachedTasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
       this.cachedTasks[index] = { ...this.cachedTasks[index], ...task };
@@ -182,10 +180,10 @@ export class TaskService {
       return;
     }
     let newIndex = this.cachedTasks.findIndex(task => task.id === itemAboveId) + 1;
-    if (newIndex < 0 ) {
+    if (newIndex < 0) {
       newIndex = 0;
     }
-    if(newIndex > this.cachedTasks.length) {
+    if (newIndex > this.cachedTasks.length) {
       newIndex = this.cachedTasks.length - 1;
     }
     this.moveTask(prevIndex, newIndex);
@@ -202,17 +200,17 @@ export class TaskService {
   }
 
   getTaskById$(id: number) {
-    return this.tasks$.pipe( map(tasks => tasks.find(task => task.id === id)));
+    return this.tasks$.pipe(map(tasks => tasks.find(task => task.id === id)));
   }
 
   getTaskFromLocalStorage() {
     if (!this.useLocalStorage) {
       return DATA;
     }
-    const storedJsonTasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as Task & { date: string } [] ;
+    const storedJsonTasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as Task & { date: string; }[];
     const storedTasks = storedJsonTasks.map((task, index) => {
       const date = task.date ? new Date(task.date) : undefined;
-      return { ...task, date: date } as Task
+      return { ...task, date: date } as Task;
     }) as Task[];
     if (storedTasks.length === 0) {
       localStorage.setItem('tasks', JSON.stringify(DATA));

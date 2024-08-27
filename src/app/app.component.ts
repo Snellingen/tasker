@@ -23,5 +23,5 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  title = 'todo';
+  title = 'tasker';
 }

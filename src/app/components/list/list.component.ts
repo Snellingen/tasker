@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +6,6 @@ import { DateToStringPipe } from '../../pipes/date-to-string.pipe';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { compareCompleted, compareDate, comparePriority, compareString } from '../../shared/compare';
-
-const DATA: any[] = [
-  { id: 1, title: 'Buy groceries', date: new Date('2022-01-01'), priority: 'High', completed: false },
-  { id: 2, title: 'Do laundry', date: new Date('2022-01-02'), priority: 'Medium', completed: true },
-  { id: 3, title: 'Clean the house', date: new Date('2022-01-03'), priority: 'Low', completed: false }
-];
 
 @Component({
   selector: 'app-list',
@@ -23,12 +17,12 @@ const DATA: any[] = [
     FormsModule,
     DateToStringPipe,
 
-  ], // TODO: create component for checkbox
+  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListComponent implements AfterViewInit, OnDestroy{
+export class ListComponent implements AfterViewInit, OnDestroy {
   @Input() displayedColumns: string[] | null = [];
   @Input() dataSource: any[] | null = [];
   @Output() onRowClicked: EventEmitter<any> = new EventEmitter<any>();

@@ -8,8 +8,8 @@ import { MatOption } from '@angular/material/core';
 import { AsyncPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {  map, startWith, Subscription, tap, } from 'rxjs';
-import { SortingDirection, SortingField, Task, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
+import { map, Subscription } from 'rxjs';
+import { SortingDirection, SortingField, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent, DropLocation } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -42,7 +42,7 @@ import { StackedBarComponent } from '../stacked-bar/stacked-bar.component';
   styleUrl: './task-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskOverviewComponent implements OnInit, OnDestroy{
+export class TaskOverviewComponent implements OnInit, OnDestroy {
 
   taskService = inject(TaskService);
   router = inject(Router);
@@ -68,15 +68,15 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   stackedBarCompletionData$ = this.taskService.tasks$.pipe(
     map(tasks => {
-      const lowPriority = tasks.filter(t => t.priority && t.priority === 'Low').length;
-      const mediumPriority = tasks.filter(t => t.priority === 'Medium').length;
-      const highPriority = tasks.filter(t => t.priority === 'High').length;
-      const noPriority = tasks.filter(t => t.priority === 'None').length;
+      const lowPriority = tasks.filter(t => t.priority?.toLowerCase() === 'low').length;
+      const mediumPriority = tasks.filter(t => t.priority?.toLowerCase() === 'medium').length;
+      const highPriority = tasks.filter(t => t.priority?.toLowerCase() === 'high').length;
+      const noPriority = tasks.filter(t => t.priority?.toLowerCase() === 'none').length;
       return [
         { label: `Low (${lowPriority})`, value: lowPriority, colorIndex: 1 },
         { label: `Medium (${mediumPriority})`, value: mediumPriority, colorIndex: 2 },
-        { label: `High (${highPriority})`, value: highPriority, colorIndex: 3},
-        { label: `None (${noPriority})`, value: noPriority, colorIndex: 4}
+        { label: `High (${highPriority})`, value: highPriority, colorIndex: 3 },
+        { label: `None (${noPriority})`, value: noPriority, colorIndex: 4 }
       ];
     })
   );
@@ -113,7 +113,7 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
     this.selectedTaskId = undefined;
   }
 
-  onTaskCheckedChange(event: {id: number, checked: boolean}) {
+  onTaskCheckedChange(event: { id: number, checked: boolean; }) {
     this.taskService.updateTask({ id: event.id, completed: event.checked });
   }
 
@@ -124,19 +124,19 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.filterSub = this.filterGroup.valueChanges
       .subscribe(filter => {
-        const taskFilters = filter as TaskFilters
+        const taskFilters = filter as TaskFilters;
         this.taskService.setFilter(taskFilters);
-    });
+      });
 
     this.sortSub = this.sortGroup.valueChanges
       .subscribe((sort) => {
         const taskSort = sort as TaskSorting;
         this.taskService.setSort(taskSort);
-    });
+      });
 
     this.taskService.activeFilter$
-      .subscribe( filter => {
-        this.filterGroup.patchValue(filter, { emitEvent: false })
+      .subscribe(filter => {
+        this.filterGroup.patchValue(filter, { emitEvent: false });
       });
   }
 
