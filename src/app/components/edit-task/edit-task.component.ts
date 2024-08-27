@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidatePriority, ValidDate } from '../../shared/form.validators';
 import { Priority, Task, TaskService } from '../../services/task.service';
@@ -29,7 +29,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   styleUrl: './edit-task.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditTaskComponent implements OnInit, OnDestroy{
+export class EditTaskComponent implements OnInit, OnDestroy {
 
   taskService = inject(TaskService);
   private _id: number | undefined;
@@ -47,12 +47,14 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     return this._id;
   }
 
+  @Output() onClose = new EventEmitter<void>();
+
   taskForm = new FormGroup({
     title: new FormControl('', [
       Validators.required,
       Validators.minLength(4)
     ]),
-    date: new FormControl<Date|undefined>(undefined, ValidDate),
+    date: new FormControl<Date | undefined>(undefined, ValidDate),
     priority: new FormControl('None', ValidatePriority)
   });
 
@@ -60,7 +62,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   taskSubscription: Subscription | undefined;
 
   submitLabel = 'Add Task';
-  validationError: string|undefined = undefined;
+  validationError: string | undefined = undefined;
 
   getDataForTaskForm() {
     if (!this.id) return;
@@ -70,10 +72,11 @@ export class EditTaskComponent implements OnInit, OnDestroy{
           this.taskForm.patchValue(task);
         }
       }
-    )).subscribe()
+      )).subscribe();
   }
 
   comparePriority(a: string, b: string) {
+    if (!a || !b) return false;
     return a.toLowerCase() === b.toLowerCase();
   }
 
@@ -81,10 +84,10 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     if (this.taskForm.valid) {
       this.validationError = undefined;
       if (this.id) {
-        const updatedTask = { ...this.taskForm.value, id: this.id } as Partial<Task> & { id: number };
+        const updatedTask = { ...this.taskForm.value, id: this.id } as Partial<Task> & { id: number; };
         this.taskService.updateTask(updatedTask);
       } else {
-        const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string};
+        const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string; };
         this.taskService.addTask(newTask);
       }
     } else {
@@ -98,6 +101,12 @@ export class EditTaskComponent implements OnInit, OnDestroy{
       this.id = undefined;
       this.taskForm.reset();
     }
+  }
+
+  onCancel() {
+    this.taskForm.reset();
+    this.id = undefined;
+    this.onClose.emit();
   }
 
   ngOnInit() {

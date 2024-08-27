@@ -80,6 +80,11 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
     this.showEditTask = true;
   }
 
+  onEditClose() {
+    this.showEditTask = false;
+    this.selectedTaskId = undefined;
+  }
+
   onTaskCheckedChange(event: {id: number, checked: boolean}) {
     this.taskService.updateTask({ id: event.id, completed: event.checked });
   }

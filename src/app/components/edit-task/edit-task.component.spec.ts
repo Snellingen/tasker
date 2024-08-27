@@ -9,7 +9,7 @@ describe('EditTaskComponent', () => {
   let fixture: ComponentFixture<EditTaskComponent>;
 
   const fakeActivatedRoute: ActivatedRoute = {
-    snapshot: { 
+    snapshot: {
       data: { id: '1' },
       paramMap: {
         get(): string {

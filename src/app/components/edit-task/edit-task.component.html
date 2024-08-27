@@ -58,6 +58,7 @@
   </div>
   <div class='edit-task__actions'>
     <button mat-raised-button type="submit">{{submitLabel}}</button>
+    <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
     @if (id) {
       <button mat-flat-button type="button" (click)="onDelete()" color="warn">Delete</button>
     }
