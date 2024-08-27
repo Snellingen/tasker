@@ -66,21 +66,28 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   isLoading$ = this.taskService.isLoading$;
   tasks$ = this.taskService.filteredSortedTasks$;
 
-  stackedBarData$ = this.taskService.tasks$.pipe(
+  stackedBarCompletionData$ = this.taskService.tasks$.pipe(
     map(tasks => {
-      const total = tasks.length;
-      const completed = tasks.filter(t => t.completed).length;
-      // const inProgress = tasks.filter(t => !t.completed).length;
       const lowPriority = tasks.filter(t => t.priority && t.priority === 'Low').length;
       const mediumPriority = tasks.filter(t => t.priority === 'Medium').length;
       const highPriority = tasks.filter(t => t.priority === 'High').length;
       const noPriority = tasks.filter(t => t.priority === 'None').length;
       return [
-        { label: `Done (${completed})`, value: completed },
-        { label: `Low (${lowPriority})`, value: lowPriority },
-        { label: `Medium (${mediumPriority})`, value: mediumPriority },
-        { label: `High (${highPriority})`, value: highPriority },
-        { label: `None (${noPriority})`, value: noPriority }
+        { label: `Low (${lowPriority})`, value: lowPriority, colorIndex: 1 },
+        { label: `Medium (${mediumPriority})`, value: mediumPriority, colorIndex: 2 },
+        { label: `High (${highPriority})`, value: highPriority, colorIndex: 3},
+        { label: `None (${noPriority})`, value: noPriority, colorIndex: 4}
+      ];
+    })
+  );
+
+  stackedBarPriorityData$ = this.taskService.tasks$.pipe(
+    map(tasks => {
+      const completed = tasks.filter(t => t.completed).length;
+      const incomplete = tasks.filter(t => !t.completed).length;
+      return [
+        { label: `Completed (${completed})`, value: completed, colorIndex: 5 },
+        { label: `Incomplete (${incomplete})`, value: incomplete, colorIndex: 6 },
       ];
     })
   );

@@ -88,12 +88,14 @@ body {
   --sys-priority-gradient-mix-color:  white 50%;
 
   --completed-color: #669967;
+  --incomplete-color: #e6b458;
 
   --stack-color-1: var(--sys-priority-low);
   --stack-color-2: var(--sys-priority-medium);
   --stack-color-3: var(--sys-priority-high);
   --stack-color-4: var(--sys-priority-none);
   --stack-color-5: var(--completed-color);
+  --stack-color-6: var(--incomplete-color);
   --stack-background-color: var(--sys-surface-container);
   --stack-label-color: #221b06;
 

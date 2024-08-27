@@ -1,6 +1,6 @@
 <div class="stacked-bar">
-  @for (stack of computedData; track $index; let index = $index) {
-    <div [class]="'stacked-bar__stack stacked-bar--color-' + (index + 1)" [style.width.%]="stack.percentage">
+  @for (stack of computedData; track $index) {
+    <div [class]="'stacked-bar__stack stacked-bar--color-' + stack.colorIndex" [style.width.%]="stack.percentage">
       <div class="stacked-bar__stack__label">{{ stack.label }}</div>
     </div>
   }
