@@ -3,7 +3,23 @@
   flex-direction: column;
   gap: 10px;
 
-  .edit-task__actions {
+  &__input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    mat-form-field {
+      width: 445px;
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__actions {
     display: flex;
     justify-content: center;
     gap: 10px;

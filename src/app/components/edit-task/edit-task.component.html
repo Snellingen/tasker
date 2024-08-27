@@ -1,4 +1,5 @@
 <form class="edit-task" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div class='edit-task__input'>
   <mat-form-field>
     <mat-label for="title">Title:</mat-label>
     <input
@@ -15,44 +16,48 @@
       <mat-error>{{taskForm.get('title')?.errors | json}}</mat-error>
     }
   </mat-form-field>
-  <mat-form-field>
-    <mat-label for="date">Date:</mat-label>
-    <input
-      matInput
-      placeholder="(Optional) Pick a due date"
-      [matDatepicker]="picker"
-      title="Select date"
-      id="date"
-      name="date"
-      formControlName="date"
-    >
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-    @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
-      <mat-error>{{taskForm.get('date')?.errors | json}}</mat-error>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label for="priority">Priority:</mat-label>
-    <mat-select
-    id="priority"
-    name="priority"
-    formControlName="priority"
-    placeholder="(Optional) Select a priority level"
-    [compareWith]="comparePriority"
-    >
-      @for (priority of priorityOptions; track priority) {
-        <mat-option [value]="priority.toLowerCase()">{{priority}}</mat-option>
+</div>
+  <div class='edit-task__options'>
+    <mat-form-field>
+      <mat-label for="date">Date:</mat-label>
+      <input
+        matInput
+        placeholder="(Optional) Pick a due date"
+        [matDatepicker]="picker"
+        title="Select date"
+        id="date"
+        name="date"
+        formControlName="date"
+      >
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
+        <mat-error>{{taskForm.get('date')?.errors | json}}</mat-error>
       }
-    </mat-select>
-    @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
-      <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>
-    }
-  </mat-form-field>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label for="priority">Priority:</mat-label>
+      <mat-select
+      id="priority"
+      name="priority"
+      formControlName="priority"
+      placeholder="(Optional) Select a priority level"
+      [compareWith]="comparePriority"
+      >
+        @for (priority of priorityOptions; track priority) {
+          <mat-option [value]="priority.toLowerCase()">{{priority}}</mat-option>
+        }
+      </mat-select>
+      @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
+        <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>
+      }
+    </mat-form-field>
+  </div>
   <div class='edit-task__actions'>
     <button mat-raised-button type="submit">{{submitLabel}}</button>
     @if (id) {
       <button mat-flat-button type="button" (click)="onDelete()" color="warn">Delete</button>
     }
   </div>
+
 </form>

@@ -1,7 +1,7 @@
 <div class="task-overview">
 
   @if(showEditTask) {
-    <app-edit-task [id]="selectedTaskId"></app-edit-task>
+    <app-edit-task class="task-overview__edit" [id]="selectedTaskId"></app-edit-task>
   }
 
   <section class='task-overview__actions' [formGroup]="sortGroup">
