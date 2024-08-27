@@ -69,23 +69,20 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   private sortSub: Subscription | undefined;
 
   ngOnInit() {
-    console.log('TaskOverviewComponent ngOnInit');
     this.filterSub = this.filterGroup.valueChanges
-    .subscribe(filter => {
+      .subscribe(filter => {
         const taskFilters = filter as TaskFilters
         this.taskService.setFilter(taskFilters);
     });
 
-    this.sortSub = this.sortGroup.valueChanges.
-    subscribe((sort) => {
+    this.sortSub = this.sortGroup.valueChanges
+      .subscribe((sort) => {
         const taskSort = sort as TaskSorting;
         this.taskService.setSort(taskSort);
     });
 
-    // set active filter based on taskService state
-    this.taskService.activeFilter$.pipe(
-      tap(filter => this.filterGroup.patchValue(filter, { emitEvent: false })
-    )).subscribe();
+    this.taskService.activeFilter$
+      .subscribe( filter => this.filterGroup.patchValue(filter, { emitEvent: false }));
   }
 
   ngOnDestroy() {

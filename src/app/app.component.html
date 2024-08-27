@@ -1,5 +1,14 @@
 <main class="main">
-  <app-theme-switch style="position: absolute; top: 10px; right: 10px;"></app-theme-switch>
+  <mat-toolbar>
+    <div class='app-menu-header'>
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Tasker</span>
+    </div>
+    <span class="spacer"></span>
+    <app-theme-switch></app-theme-switch>
+  </mat-toolbar>
 </main>
 
 <router-outlet />

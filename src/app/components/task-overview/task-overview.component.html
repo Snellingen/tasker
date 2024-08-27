@@ -1,46 +1,47 @@
 <div class="task-overview">
-  <button mat-mini-fab [routerLink]="'/edit-task'"><mat-icon>add</mat-icon></button>
-  <br>
-  <div class="task-overview__filters" [formGroup]="filterGroup">
-    <section>
-      <mat-button-toggle-group
-        formControlName='completionStatusFilters'
-        aria-label="Completion Status"
-        [hideMultipleSelectionIndicator]="true"
-        multiple
-      >
-        <mat-button-toggle value="completed">Completed</mat-button-toggle>
-        <mat-button-toggle value="incomplete">Incomplete</mat-button-toggle>
-      </mat-button-toggle-group>
-    </section>
-
-    <section>
-      <mat-button-toggle-group
-        formControlName='priorityFilters'
-        aria-label="Priority Filters"
-        [hideMultipleSelectionIndicator]="true"
-        multiple
-      >
-        <mat-button-toggle value="high">High</mat-button-toggle>
-        <mat-button-toggle value="medium">Medium</mat-button-toggle>
-        <mat-button-toggle value="low">Low</mat-button-toggle>
-        <mat-button-toggle value="none">None</mat-button-toggle>
-      </mat-button-toggle-group>
-    </section>
-  </div>
-  <br>
   <section class='task-overview__actions' [formGroup]="sortGroup">
-    <!-- <p>tasks: {{ (tasks$| async)?.length }}/{{(tasks$ | async)?.length}}<p> -->
+    <button class='task-overview__actions__add' mat-flat-button [routerLink]="'/edit-task'"><mat-icon>add</mat-icon> Add Task </button>
+
+    <div class="task-overview__actions__filter" [formGroup]="filterGroup">
+      <section>
+        <mat-button-toggle-group
+          formControlName='completionStatusFilters'
+          aria-label="Completion Status"
+          [hideMultipleSelectionIndicator]="true"
+          multiple
+        >
+          <mat-button-toggle value="completed">Completed</mat-button-toggle>
+          <mat-button-toggle value="incomplete">Incomplete</mat-button-toggle>
+        </mat-button-toggle-group>
+      </section>
+
+      <section>
+        <mat-button-toggle-group
+          formControlName='priorityFilters'
+          aria-label="Priority Filters"
+          [hideMultipleSelectionIndicator]="true"
+          multiple
+        >
+          <mat-button-toggle value="high">High</mat-button-toggle>
+          <mat-button-toggle value="medium">Medium</mat-button-toggle>
+          <mat-button-toggle value="low">Low</mat-button-toggle>
+          <mat-button-toggle value="none">None</mat-button-toggle>
+        </mat-button-toggle-group>
+      </section>
+    </div>
+
     <div class = 'task-overview__actions__sort'>
       <mat-form-field>
         <mat-label>Sort by:</mat-label>
         <mat-select formControlName='selectedSort' >
-          <mat-option value="custom">Custom</mat-option>
-          <mat-option value="title">Title</mat-option>
-          <mat-option value="priority">Priority</mat-option>
-          <mat-option value="dueDate">Due Date</mat-option>
+          <mat-option value="custom">Custom sorting</mat-option>
+          <mat-option value="title">Sort by Title</mat-option>
+          <mat-option value="priority">Sort by Priority</mat-option>
+          <mat-option value="dueDate">Sort by Due Date</mat-option>
         </mat-select>
       </mat-form-field>
+
+      @if(sortGroup.get('selectedSort')?.value !== 'custom') {
       <mat-form-field class='task-overview__sort'>
         <mat-label>Direction:</mat-label>
         <mat-select formControlName='selectedSortDirection' >
@@ -48,6 +49,7 @@
           <mat-option value="desc">Descending</mat-option>
         </mat-select>
       </mat-form-field>
+      }
     </div>
   </section>
   <app-card-list [dataSource]="tasks$ | async" [disableDrag]="disableDrag$ | async" [loading]="isLoading$ | async" ></app-card-list>

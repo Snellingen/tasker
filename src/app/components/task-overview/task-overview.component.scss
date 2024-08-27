@@ -1,40 +1,45 @@
 .task-overview {
   padding: 10px;
 
-  &__filters{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-
-    .mat-button-toggle-checked{
-      &[value="low"] {
-        background-color: var(--sys-priority-background-low);
-      }
-      &[value="medium"] {
-        background-color: var(--sys-priority-background-medium);
-      }
-      &[value="high"] {
-        background-color: var(--sys-priority-background-high);
-      }
-      &[value="none"] {
-        background-color: var(--sys-priority-background-none);
-      }
-    }
-  }
-
   &__actions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
-    align-items: flex-end;
-  }
+    align-items: end;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
 
-  &__sort {
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: end;
-    // padding-right: 10px;
+    &__add, &__filter, &__sort {
+      margin-top: 10px;
+    }
 
+    &__sort {
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      gap: 10px;
+    }
+
+    &__filter{
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      gap: 10px;
+
+      .mat-button-toggle-checked{
+        &[value="low"] {
+          background-color: var(--sys-priority-background-low);
+        }
+        &[value="medium"] {
+          background-color: var(--sys-priority-background-medium);
+        }
+        &[value="high"] {
+          background-color: var(--sys-priority-background-high);
+        }
+        &[value="none"] {
+          background-color: var(--sys-priority-background-none);
+        }
+      }
+    }
   }
 }
