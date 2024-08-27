@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { Task } from '../../services/task.service';
@@ -32,5 +32,7 @@ export class TaskCardComponent {
   onTaskCompletedChange() {
     console.log('Task completed');
   }
+
+  @Output() Clicked = new EventEmitter<number>();
 
 }

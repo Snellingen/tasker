@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { ValidateDateInFuture, ValidatePriority } from './form.validators';
+import { ValidateDateInFuture, ValidatePriority, ValidDate } from './form.validators';
 
 describe('Form Validators', () => {
   describe('ValidateDateInFuture', () => {
@@ -53,4 +53,18 @@ describe('Form Validators', () => {
       expect(result).toBeNull();
     });
   });
+
+  describe('ValidDate', () => {
+    it('should return null for a valid date', () => {
+      const control = new FormControl(new Date().toISOString());
+      const result = ValidDate(control);
+      expect(result).toBeNull();
+    });
+
+    it('should return an error object for an invalid date', () => {
+      const control = new FormControl('InvalidDate');
+      const result = ValidDate(control);
+      expect(result).toEqual({ invalidDate: true });
+    });
+  }
 });

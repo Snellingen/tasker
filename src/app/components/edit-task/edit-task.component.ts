@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ValidateDateInFuture, ValidatePriority } from '../../shared/form.validators';
+import { ValidateDateInFuture, ValidatePriority, ValidDate } from '../../shared/form.validators';
 import { Priority, Task, TaskService } from '../../services/task.service';
 import { Subscription, tap } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
@@ -34,19 +34,26 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   taskService = inject(TaskService);
 
   pageTitle = 'Edit Task';
-  @Input() id: string | undefined;
+  private _id: number | undefined;
+
+  @Input() set id(value: number | undefined) {
+    this._id = value;
+    this.getDataForTaskForm();
+  }
+  get id() {
+    return this._id;
+  }
 
   taskForm = new FormGroup({
     title: new FormControl('', [
       Validators.required,
       Validators.minLength(4)
     ]),
-    date: new FormControl<Date|undefined>(undefined, ValidateDateInFuture),
+    date: new FormControl<Date|undefined>(undefined, ValidDate),
     priority: new FormControl('None', ValidatePriority)
   });
 
   priorityOptions: Priority[] = ['None', 'Low', 'Medium', 'High'];
-
   taskSubscription: Subscription | undefined;
 
   getDataForTaskForm() {
@@ -55,7 +62,6 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     this.taskSubscription = this.taskService.getTaskById$(Number(this.id)).pipe(
       tap(task => {
         if (task) {
-          console.log('patch', task);
           this.taskForm.patchValue(task);
         }
       }
@@ -69,16 +75,13 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   onSubmit() {
     if (this.taskForm.valid) {
       if (this.id) {
-        console.log('update', this.taskForm.value);
         const updatedTask = { ...this.taskForm.value, id: Number(this.id) } as Partial<Task> & { id: number };
         this.taskService.updateTask(Number(this.id), updatedTask);
       } else {
-        console.log('add', this.taskForm.value);
         const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string};
         this.taskService.addTask(newTask);
       }
     } else {
-      console.log('invalid form');
     }
   }
 

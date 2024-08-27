@@ -57,5 +57,10 @@
       }
     </div>
   </section>
-  <app-card-list [dataSource]="tasks$ | async" [disableDrag]="disableDrag$ | async" [loading]="isLoading$ | async" ></app-card-list>
+  <app-card-list
+    (itemClick)="onTaskClick($event)"
+    [dataSource]="tasks$ | async"
+    [disableDrag]="disableDrag$ | async"
+    [loading]="isLoading$ | async"
+  ></app-card-list>
 </div>

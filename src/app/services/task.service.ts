@@ -157,13 +157,12 @@ export class TaskService {
     const id = this.rawTasks.length + 1;
     const newTask = { id, ...task, completed: false };
     this.rawTasks.push(newTask);
-    console.log('addTask', this.rawTasks);
     this.tasks$.next(this.rawTasks);
   }
 
   removeTask(id: number) {
     this.rawTasks = this.rawTasks.filter(task => task.id !== id);
-    this.tasks$.next(this.rawTasks)
+    this.tasks$.next(this.rawTasks);
   }
 
   updateTask(id: number, task: Partial<Task> & { id: number }) {

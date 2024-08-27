@@ -1,6 +1,6 @@
 
 @if (task){
-    <mat-card matRipple class='task-card'>
+    <mat-card matRipple (click)='Clicked.emit(task.id)' class='task-card'>
         <div class='task-card__content'>
             <div class='task-card__title'>
                 <mat-checkbox class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange()'></mat-checkbox>

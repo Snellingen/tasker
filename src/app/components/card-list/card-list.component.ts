@@ -1,5 +1,5 @@
 import { Task } from '../../services/task.service';
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { ViewChild, ElementRef } from '@angular/core';
@@ -25,6 +25,7 @@ export class CardListComponent {
   @Input() dataSource: Task[] | null = [];
   @Input() disableDrag: boolean | null = false;
   @Input() loading: boolean | null = false;
+  @Output() itemClick = new EventEmitter<number>();
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
   @ViewChild('viewport', { static: false }) viewport!: CdkVirtualScrollViewport;
 
@@ -33,9 +34,6 @@ export class CardListComponent {
   maxBufferPx = 2 * this.itemPixelSize;
   lastDragIndex: number = -1;
   idKey = 'task_';
-
-  dragStarted(event: any) {
-  }
 
   onItemDrop(event: any) {
     if (this.dataSource === null) return;

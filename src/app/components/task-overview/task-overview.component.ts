@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ListComponent } from '../list/list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -44,6 +44,7 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   taskService = inject(TaskService);
   router = inject(Router);
+  changeDetectionRef = inject(ChangeDetectorRef);
 
 
   filterGroup = new FormGroup({
@@ -64,12 +65,17 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   tasks$ = this.taskService.filteredSortedTasks$;
 
   showEditTask = false;
-  selectedTaskId: string | undefined;
+  selectedTaskId: number | undefined;
 
   private filterSub: Subscription | undefined;
   private sortSub: Subscription | undefined;
 
   onNewTaskClick() {
+    this.showEditTask = true;
+  }
+
+  onTaskClick(id: number) {
+    this.selectedTaskId = id;
     this.showEditTask = true;
   }
 

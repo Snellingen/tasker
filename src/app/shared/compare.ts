@@ -24,5 +24,5 @@ export function compareString(a: string | undefined | null, b: string | undefine
   if (a === undefined || a === null || b === undefined || b === null) {
     return 0;
   }
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  return a.localeCompare(b, undefined, { sensitivity: 'base' }) * (isAsc ? 1 : -1);
 }

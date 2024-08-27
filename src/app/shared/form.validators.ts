@@ -21,3 +21,13 @@ export function ValidatePriority(control: AbstractControl) {
   }
   return { invalidPriority: true };
 }
+
+export function ValidDate (control: AbstractControl) {
+  if (!control.value) return null;
+
+  const date = new Date(control.value);
+  if (isNaN(date.getTime())) {
+    return { invalidDate: true };
+  }
+  return null;
+}
