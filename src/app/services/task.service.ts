@@ -165,11 +165,13 @@ export class TaskService {
     this.tasks$.next(this.rawTasks);
   }
 
-  updateTask(id: number, task: Partial<Task> & { id: number }) {
-    const index = this.rawTasks.findIndex(task => task.id === id);
+  updateTask(task: Partial<Task> & { id: number }) {
+    const index = this.rawTasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
       this.rawTasks[index] = { ...this.rawTasks[index], ...task };
       this.tasks$.next(this.rawTasks);
+      console.log('Task updated', task);
+      console.log('Tasks', this.rawTasks);
     }
   }
 

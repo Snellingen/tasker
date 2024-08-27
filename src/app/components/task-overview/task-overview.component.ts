@@ -79,6 +79,10 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
     this.showEditTask = true;
   }
 
+  onTaskCheckedChange(event: {id: number, checked: boolean}) {
+    this.taskService.updateTask({ id: event.id, completed: event.checked });
+  }
+
   ngOnInit() {
     this.filterSub = this.filterGroup.valueChanges
       .subscribe(filter => {

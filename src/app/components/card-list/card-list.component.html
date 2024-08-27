@@ -22,7 +22,8 @@
     [maxBufferPx]="maxBufferPx" [class]="'card-list__viewport'">
       <app-task-card
       cdkDrag
-      (Clicked)="itemClick.emit($event)"
+      (onClicked)="onItemClick.emit($event)"
+      (onCheckedChanged)="onItemCheckedChange.emit($event)"
       *cdkVirtualFor="let task of dataSource"
       [task]="task">
       </app-task-card>

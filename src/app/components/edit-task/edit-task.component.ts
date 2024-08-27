@@ -76,7 +76,7 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     if (this.taskForm.valid) {
       if (this.id) {
         const updatedTask = { ...this.taskForm.value, id: Number(this.id) } as Partial<Task> & { id: number };
-        this.taskService.updateTask(Number(this.id), updatedTask);
+        this.taskService.updateTask(updatedTask);
       } else {
         const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string};
         this.taskService.addTask(newTask);

@@ -1,9 +1,9 @@
 
 @if (task){
-    <mat-card matRipple (click)='Clicked.emit(task.id)' class='task-card'>
+    <mat-card matRipple class='task-card' (click)='onClicked.emit(task.id)'>
         <div class='task-card__content'>
             <div class='task-card__title'>
-                <mat-checkbox class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange()'></mat-checkbox>
+                <mat-checkbox (click)='onCheckClick($event)' class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange($event)'></mat-checkbox>
                 <span class='task-card__title-text' >{{ task.title }}</span>
             </div>
             <div class='task-card__info'>

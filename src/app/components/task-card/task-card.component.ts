@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { Task } from '../../services/task.service';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { DateToStringPipe } from '../../pipes/date-to-string.pipe';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -29,10 +29,17 @@ export class TaskCardComponent {
     date: new Date(),
     priority: 'Low'
   } as Task
-  onTaskCompletedChange() {
-    console.log('Task completed');
+  @Output() onClicked = new EventEmitter<number>();
+  @Output() onCheckedChanged = new EventEmitter<{id: number, checked: boolean}>();
+
+  onTaskCompletedChange(event: MatCheckboxChange) {
+    if (!this.task) return;
+    this.onCheckedChanged.emit({id: this.task.id, checked: event.checked});
   }
 
-  @Output() Clicked = new EventEmitter<number>();
+  onCheckClick(event: MouseEvent) {
+    event.stopPropagation();
+  }
+
 
 }

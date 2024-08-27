@@ -25,7 +25,8 @@ export class CardListComponent {
   @Input() dataSource: Task[] | null = [];
   @Input() disableDrag: boolean | null = false;
   @Input() loading: boolean | null = false;
-  @Output() itemClick = new EventEmitter<number>();
+  @Output() onItemClick = new EventEmitter<number>();
+  @Output() onItemCheckedChange = new EventEmitter<{id: number, checked: boolean}>();
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
   @ViewChild('viewport', { static: false }) viewport!: CdkVirtualScrollViewport;
 

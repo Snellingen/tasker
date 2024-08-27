@@ -31,7 +31,7 @@ const DATA: any[] = [
 export class ListComponent implements AfterViewInit, OnDestroy{
   @Input() displayedColumns: string[] | null = [];
   @Input() dataSource: any[] | null = [];
-  @Output() rowClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onRowClicked: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(MatSort) sort: MatSort | undefined;
   @ViewChild(MatTable) table: MatTable<any> | undefined;

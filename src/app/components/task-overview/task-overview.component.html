@@ -58,7 +58,8 @@
     </div>
   </section>
   <app-card-list
-    (itemClick)="onTaskClick($event)"
+    (onItemClick)="onTaskClick($event)"
+    (onItemCheckedChange)="onTaskCheckedChange($event)"
     [dataSource]="tasks$ | async"
     [disableDrag]="disableDrag$ | async"
     [loading]="isLoading$ | async"
