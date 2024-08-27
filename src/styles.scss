@@ -1,57 +1,11 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @use './m3-theme.scss' as my-theme;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-
-// Define the theme object.
-// $tasker-theme: mat.define-theme((
-//   color: (
-//     theme-type: light,
-//     primary: mat.$yellow-palette,
-//     tertiary: mat.$rose-palette,
-//     use-system-variables: true,
-//   ),
-//   typography: (
-//     use-system-variables: true,
-//   ),
-//   density: (
-//     scale: 0,
-//   )
-// ));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 :root {
   @include mat.all-component-themes(my-theme.$light-theme);
 }
-
-// Comment out the line below if you want to use the pre-defined typography utility classes.
-// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
-// @include mat.typography-hierarchy($todo-theme);
-
-// Comment out the line below if you want to use the deprecated `color` inputs.
-// @include mat.color-variants-backwards-compatibility($todo-theme);
-
-
-// @mixin my-comp-theme($theme) {
-//   @if (mat.get-theme-version($theme) == 1) {
-//     body {
-//       background-color: green !important
-//     }
-//   } @else {
-//     body {
-//       background-color: red !important
-//     }
-//   }
-// }
 
 html,
 body {
@@ -120,7 +74,9 @@ body {
   --sys-tertiary-container: #cbebcc;
   --sys-tertiary-fixed: #cbebcc;
   --sys-tertiary-fixed-dim: #b0ceb1;
-
+  
+  --sys-error-button: #ba1a1a;
+  --sys-on-error-button: #ffffff;
   --sys-priority-low: rgb(17, 138, 178);
   --sys-priority-medium: rgb(255, 209, 102);
   --sys-priority-high: rgb(239, 71, 111);
@@ -203,6 +159,7 @@ body {
 }
 
 
+
 html,
 body {
   height: 100%;
@@ -211,4 +168,9 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mdc-button.mat-mdc-unelevated-button.mat-warn {
+  background-color: var(--sys-error-button);
+  color: var(--sys-on-error-button);
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ValidateDateInFuture, ValidatePriority, ValidDate } from '../../shared/form.validators';
+import { ValidatePriority, ValidDate } from '../../shared/form.validators';
 import { Priority, Task, TaskService } from '../../services/task.service';
 import { Subscription, tap } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
@@ -37,7 +37,10 @@ export class EditTaskComponent implements OnInit, OnDestroy{
     this._id = value;
     if (value === undefined) {
       this.taskForm.reset();
+      this.submitLabel = 'Add Task';
+      return;
     }
+    this.submitLabel = 'Update Task';
     this.getDataForTaskForm();
   }
   get id() {
@@ -55,6 +58,8 @@ export class EditTaskComponent implements OnInit, OnDestroy{
 
   priorityOptions: Priority[] = ['None', 'Low', 'Medium', 'High'];
   taskSubscription: Subscription | undefined;
+
+  submitLabel = 'Add Task';
 
   getDataForTaskForm() {
     if (!this.id) return;
@@ -74,13 +79,21 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   onSubmit() {
     if (this.taskForm.valid) {
       if (this.id) {
-        const updatedTask = { ...this.taskForm.value, id: Number(this.id) } as Partial<Task> & { id: number };
+        const updatedTask = { ...this.taskForm.value, id: this.id } as Partial<Task> & { id: number };
         this.taskService.updateTask(updatedTask);
       } else {
         const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string};
         this.taskService.addTask(newTask);
       }
     } else {
+    }
+  }
+
+  onDelete() {
+    if (this.id) {
+      this.taskService.removeTask(this.id);
+      this.id = undefined;
+      this.taskForm.reset();
     }
   }
 

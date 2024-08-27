@@ -49,5 +49,10 @@
       <mat-error>{{taskForm.get('priority')?.errors | json}}</mat-error>
     }
   </mat-form-field>
-  <button mat-raised-button type="submit">Submit</button>
+  <div class='edit-task__actions'>
+    <button mat-raised-button type="submit">{{submitLabel}}</button>
+    @if (id) {
+      <button mat-flat-button type="button" (click)="onDelete()" color="warn">Delete</button>
+    }
+  </div>
 </form>
