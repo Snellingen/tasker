@@ -1,10 +1,17 @@
 import { Task } from '../../services/task.service';
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { ViewChild, ElementRef } from '@angular/core';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+
+export interface DropLocation {
+  itemId: number;
+  prevIndex: number;
+  newIndex: number;
+  itemAboveId: number; // Used to determine location without filtering
+}
 
 @Component({
   selector: 'app-card-list',
@@ -27,6 +34,7 @@ export class CardListComponent {
   @Input() loading: boolean | null = false;
   @Output() onItemClick = new EventEmitter<number>();
   @Output() onItemCheckedChange = new EventEmitter<{id: number, checked: boolean}>();
+  @Output() onListDropLocation = new EventEmitter<DropLocation>();
   @ViewChild('wrapper', { static: true }) wrapper!: ElementRef;
   @ViewChild('viewport', { static: false }) viewport!: CdkVirtualScrollViewport;
 
@@ -39,9 +47,17 @@ export class CardListComponent {
   onItemDrop(event: any) {
     if (this.dataSource === null) return;
     if (this.viewport === null) return;
+
     const vsStartIndex = this.viewport.getRenderedRange().start;
-    moveItemInArray(this.dataSource, event.previousIndex + vsStartIndex, event.currentIndex + vsStartIndex);
-    this.dataSource = [...this.dataSource];
+    const dropLocation: DropLocation = {
+      itemId: this.dataSource[event.previousIndex]?.id,
+      prevIndex: event.previousIndex + vsStartIndex,
+      newIndex:  event.currentIndex + vsStartIndex,
+      itemAboveId: this.dataSource[event.currentIndex - 1]?.id
+    };
+
+    console.log('Drop Location:', dropLocation);
+    this.onListDropLocation.emit(dropLocation);
   }
 
 }

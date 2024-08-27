@@ -11,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {  map, startWith, Subscription, tap, } from 'rxjs';
 import { SortingDirection, SortingField, Task, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { CardListComponent } from '../card-list/card-list.component';
+import { CardListComponent, DropLocation } from '../card-list/card-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
@@ -115,6 +115,10 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
 
   onTaskCheckedChange(event: {id: number, checked: boolean}) {
     this.taskService.updateTask({ id: event.id, completed: event.checked });
+  }
+
+  onListDropLocation(dropLocation: DropLocation) {
+    this.taskService.moveTaskById(dropLocation.itemId, dropLocation.itemAboveId);
   }
 
   ngOnInit() {

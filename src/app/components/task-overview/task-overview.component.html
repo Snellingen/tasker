@@ -63,6 +63,7 @@
   <app-card-list
     (onItemClick)="onTaskClick($event)"
     (onItemCheckedChange)="onTaskCheckedChange($event)"
+    (onListDropLocation)="onListDropLocation($event)"
     [dataSource]="tasks$ | async"
     [disableDrag]="disableDrag$ | async"
     [loading]="isLoading$ | async"
