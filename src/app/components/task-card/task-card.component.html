@@ -4,7 +4,7 @@
         <div class='task-card__content'>
             <div class='task-card__title'>
                 <mat-checkbox class='task-card__checkbox' [checked]='task.completed' (change)='onTaskCompletedChange()'></mat-checkbox>
-                <mat-card-title>{{ task.title }}</mat-card-title>
+                <span class='task-card__title-text' >{{ task.title }}</span>
             </div>
             <div class='task-card__info'>
                 @if (task.date) {

@@ -29,7 +29,7 @@ const DISPLAY_COLUMNS: TaskField[] = ['title', 'date', 'priority', 'completed'];
 const DATA: Task[] = [
   { id: 1, title: 'Buy groceries', date: new Date('2022-01-01'), priority: 'None', completed: false },
   { id: 2, title: 'Do laundry', date: new Date('2022-01-02'), priority: 'Medium', completed: true },
-  { id: 3, title: 'Clean the house', date: new Date('2022-01-03'), priority: 'Low', completed: false },
+  { id: 3, title: 'Clean the house and empty the dishwasher', date: new Date('2022-01-03'), priority: 'Low', completed: false },
   { id: 4, title: 'Go to the gym', date: new Date('2022-01-04'), priority: 'High', completed: true },
   { id: 5, title: 'Cook dinner', date: new Date('2022-01-05'), priority: 'Medium', completed: false },
   { id: 6, title: 'Walk the dog', date: new Date('2022-01-06'), priority: 'Low', completed: true },

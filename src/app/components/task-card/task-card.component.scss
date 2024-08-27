@@ -20,14 +20,13 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        width: 100%;
+        flex-grow: 1;
     }
 
     &__title {
         display: flex;
         flex-direction: row;
         align-items: center;
-        max-width: 300px;
         color: var(--sys-on-surface);
     }
     &__checkbox {

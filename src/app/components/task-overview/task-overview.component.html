@@ -1,6 +1,6 @@
 <div class="task-overview">
 
-  @if(!showEditTask) {
+  @if(showEditTask) {
     <app-edit-task [id]="selectedTaskId"></app-edit-task>
   }
 

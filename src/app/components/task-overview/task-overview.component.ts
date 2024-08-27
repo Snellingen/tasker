@@ -64,7 +64,7 @@ export class TaskOverviewComponent implements OnInit, OnDestroy{
   tasks$ = this.taskService.filteredSortedTasks$;
 
   showEditTask = false;
-  selectedTaskId: string | undefined = "2";
+  selectedTaskId: string | undefined;
 
   private filterSub: Subscription | undefined;
   private sortSub: Subscription | undefined;
