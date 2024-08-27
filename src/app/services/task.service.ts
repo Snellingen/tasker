@@ -103,7 +103,9 @@ export class TaskService {
 
   isLoading$ = new BehaviorSubject(true);
   displayedColumns$ = of(DISPLAY_COLUMNS);
-  tasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)), shareReplay());
+  tasks$ = new BehaviorSubject<Task[]>([]);
+  fetchTasks$ = of(this.rawTasks).pipe(delay(1000), tap(() => this.isLoading$.next(false)));
+
   activeFilter$ = new BehaviorSubject<TaskFilters>({ completionStatusFilters: [], priorityFilters: [] })
   activeSort$ = new BehaviorSubject<TaskSorting>({ selectedSort: 'custom', selectedSortDirection: 'asc' });
 
@@ -151,21 +153,24 @@ export class TaskService {
     this.activeSort$.next(sort);
   }
 
-  addTask(task: Task) {
-    this.rawTasks.push(task);
-    this.tasks$ = of(this.rawTasks);
+  addTask(task: Partial<Task> & { title: string }) {
+    const id = this.rawTasks.length + 1;
+    const newTask = { id, ...task, completed: false };
+    this.rawTasks.push(newTask);
+    console.log('addTask', this.rawTasks);
+    this.tasks$.next(this.rawTasks);
   }
 
   removeTask(id: number) {
     this.rawTasks = this.rawTasks.filter(task => task.id !== id);
-    this.tasks$ = of(this.rawTasks);
+    this.tasks$.next(this.rawTasks)
   }
 
   updateTask(id: number, task: Partial<Task> & { id: number }) {
     const index = this.rawTasks.findIndex(task => task.id === id);
     if (index !== -1) {
       this.rawTasks[index] = { ...this.rawTasks[index], ...task };
-      this.tasks$ = of(this.rawTasks);
+      this.tasks$.next(this.rawTasks);
     }
   }
 
@@ -173,5 +178,7 @@ export class TaskService {
     return this.tasks$.pipe( map(tasks => tasks.find(task => task.id === id)));
   }
 
-  constructor() { }
+  constructor() {
+    this.fetchTasks$.subscribe(tasks => this.tasks$.next(tasks));
+  }
 }

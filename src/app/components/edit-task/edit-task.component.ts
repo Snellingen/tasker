@@ -69,13 +69,16 @@ export class EditTaskComponent implements OnInit, OnDestroy{
   onSubmit() {
     if (this.taskForm.valid) {
       if (this.id) {
+        console.log('update', this.taskForm.value);
         const updatedTask = { ...this.taskForm.value, id: Number(this.id) } as Partial<Task> & { id: number };
         this.taskService.updateTask(Number(this.id), updatedTask);
       } else {
-        const newTask = { ...this.taskForm.value, id: this.taskService.rawTasks.length + 1 } as Task;
+        console.log('add', this.taskForm.value);
+        const newTask = { ...this.taskForm.value } as Partial<Task> & { title: string};
         this.taskService.addTask(newTask);
       }
     } else {
+      console.log('invalid form');
     }
   }
 
