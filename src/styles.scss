@@ -3,6 +3,8 @@
 
 @include mat.core();
 
+@import 'material-icons/iconfont/material-icons.css';
+
 :root {
   @include mat.all-component-themes(my-theme.$light-theme);
 }
