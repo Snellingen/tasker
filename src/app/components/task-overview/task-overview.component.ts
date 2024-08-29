@@ -8,7 +8,7 @@ import { MatOption } from '@angular/material/core';
 import { AsyncPipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { map, Subscription } from 'rxjs';
+import { combineLatest, map, Subscription } from 'rxjs';
 import { SortingDirection, SortingField, TaskFilters, TaskService, TaskSorting } from '../../services/task.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CardListComponent, DropLocation } from '../card-list/card-list.component';
@@ -59,8 +59,14 @@ export class TaskOverviewComponent implements OnInit, OnDestroy {
     selectedSortDirection: new FormControl<SortingDirection>('asc')
   });
 
-  disableDrag$ = this.sortGroup.valueChanges.pipe(
-    map(sort => sort.selectedSort !== 'custom')
+  sortCompareFn = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+
+  disableDrag$ = combineLatest([this.taskService.activeSort$, this.taskService.activeFilter$]).pipe(
+    map(([sort, filter]) => {
+      const hasSortingEnabled = sort.selectedSort !== 'custom';
+      const hasFilteringEnabled = filter.completionStatusFilters.length > 0 || filter.priorityFilters.length > 0;
+      return hasSortingEnabled || hasFilteringEnabled;
+    })
   );
 
   isLoading$ = this.taskService.isLoading$;
@@ -97,6 +103,8 @@ export class TaskOverviewComponent implements OnInit, OnDestroy {
 
   private filterSub: Subscription | undefined;
   private sortSub: Subscription | undefined;
+  private filterInputSub: Subscription | undefined;
+  private sortInputSub: Subscription | undefined;
 
   onNewTaskClick() {
     this.showEditTask = true;
@@ -118,23 +126,29 @@ export class TaskOverviewComponent implements OnInit, OnDestroy {
   }
 
   onListDropLocation(dropLocation: DropLocation) {
-    this.taskService.moveTaskById(dropLocation.itemId, dropLocation.itemAboveId);
+    // this.taskService.moveTaskById(dropLocation.itemId, dropLocation.itemAboveId);
+    this.taskService.moveTask(dropLocation.prevIndex, dropLocation.newIndex);
   }
 
   ngOnInit() {
-    this.filterSub = this.filterGroup.valueChanges
+    this.filterInputSub = this.filterGroup.valueChanges
       .subscribe(filter => {
         const taskFilters = filter as TaskFilters;
         this.taskService.setFilter(taskFilters);
       });
 
-    this.sortSub = this.sortGroup.valueChanges
-      .subscribe((sort) => {
-        const taskSort = sort as TaskSorting;
-        this.taskService.setSort(taskSort);
+    this.sortInputSub = this.sortGroup.valueChanges
+      .subscribe(sort => {
+        const taskSorting = sort as TaskSorting;
+        this.taskService.setSort(taskSorting);
       });
 
-    this.taskService.activeFilter$
+    this.sortSub = this.taskService.activeSort$.subscribe(
+      sort => {
+        this.sortGroup.patchValue(sort, { emitEvent: false });
+      });
+
+    this.filterSub = this.taskService.activeFilter$
       .subscribe(filter => {
         this.filterGroup.patchValue(filter, { emitEvent: false });
       });
@@ -143,6 +157,8 @@ export class TaskOverviewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.filterSub?.unsubscribe();
     this.sortSub?.unsubscribe();
+    this.sortInputSub?.unsubscribe();
+    this.filterInputSub?.unsubscribe();
   }
 
 }
