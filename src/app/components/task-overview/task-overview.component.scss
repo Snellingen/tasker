@@ -18,6 +18,7 @@
 
     &__sort {
       display: flex;
+      flex-wrap: wrap;
       flex-direction: row;
       align-items: end;
       gap: 10px;
@@ -26,6 +27,7 @@
     &__filter{
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: end;
       gap: 10px;
 
